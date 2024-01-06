@@ -1,4 +1,8 @@
 import { Module } from "@nestjs/common";
+import { CompetitionModule } from "./competition/competition.module";
+import { TeamModule } from "./team/team.module";
+import { LiveModule } from "./live/live.module";
+import { TableModule } from "./table/table.module";
 import { HealthModule } from "./health/health.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { SecretsManagerModule } from "./providers/secrets/secretsManager.module";
@@ -11,6 +15,10 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 @Module({
   controllers: [],
   imports: [
+    CompetitionModule,
+    TeamModule,
+    LiveModule,
+    TableModule,
     HealthModule,
     PrismaModule,
     SecretsManagerModule,
