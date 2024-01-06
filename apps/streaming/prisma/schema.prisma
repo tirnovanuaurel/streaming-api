@@ -1,0 +1,53 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Competition {
+  createdAt DateTime @default(now())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String?  @unique
+  tables    Table[]
+  updatedAt DateTime @updatedAt
+}
+
+model Team {
+  createdAt DateTime @default(now())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  logo      String?
+  name      String?  @unique
+  tables    Table[]
+  updatedAt DateTime @updatedAt
+}
+
+model Live {
+  awayScore Int?
+  awayTeam  String?
+  createdAt DateTime @default(now())
+  homeScore Int?
+  homeTeam  String?
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  updatedAt DateTime @updatedAt
+}
+
+model Table {
+  competition     Competition? @relation(fields: [competitionId], references: [id])
+  competitionId   String?      @db.ObjectId
+  createdAt       DateTime     @default(now())
+  drawn           Int?
+  goalsConceded   Int?
+  goalsDifference Int?
+  goalsScored     Int?
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  lost            Int?
+  played          Int?
+  points          Int?
+  team            Team?        @relation(fields: [teamId], references: [id])
+  teamId          String?      @db.ObjectId
+  updatedAt       DateTime     @updatedAt
+  won             Int?
+}
