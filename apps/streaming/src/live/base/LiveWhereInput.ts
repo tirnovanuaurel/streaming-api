@@ -11,57 +11,56 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IntNullableFilter } from "../../util/IntNullableFilter";
+import { IntFilter } from "../../util/IntFilter";
 import { Type } from "class-transformer";
 import { IsOptional } from "class-validator";
-import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { StringFilter } from "../../util/StringFilter";
 
 @InputType()
 class LiveWhereInput {
   @ApiProperty({
     required: false,
-    type: IntNullableFilter,
+    type: IntFilter,
   })
-  @Type(() => IntNullableFilter)
+  @Type(() => IntFilter)
   @IsOptional()
-  @Field(() => IntNullableFilter, {
+  @Field(() => IntFilter, {
     nullable: true,
   })
-  awayScore?: IntNullableFilter;
+  awayScore?: IntFilter;
 
   @ApiProperty({
     required: false,
-    type: StringNullableFilter,
+    type: StringFilter,
   })
-  @Type(() => StringNullableFilter)
+  @Type(() => StringFilter)
   @IsOptional()
-  @Field(() => StringNullableFilter, {
+  @Field(() => StringFilter, {
     nullable: true,
   })
-  awayTeam?: StringNullableFilter;
+  awayTeam?: StringFilter;
 
   @ApiProperty({
     required: false,
-    type: IntNullableFilter,
+    type: IntFilter,
   })
-  @Type(() => IntNullableFilter)
+  @Type(() => IntFilter)
   @IsOptional()
-  @Field(() => IntNullableFilter, {
+  @Field(() => IntFilter, {
     nullable: true,
   })
-  homeScore?: IntNullableFilter;
+  homeScore?: IntFilter;
 
   @ApiProperty({
     required: false,
-    type: StringNullableFilter,
+    type: StringFilter,
   })
-  @Type(() => StringNullableFilter)
+  @Type(() => StringFilter)
   @IsOptional()
-  @Field(() => StringNullableFilter, {
+  @Field(() => StringFilter, {
     nullable: true,
   })
-  homeTeam?: StringNullableFilter;
+  homeTeam?: StringFilter;
 
   @ApiProperty({
     required: false,

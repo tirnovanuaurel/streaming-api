@@ -3,7 +3,7 @@ import { Table } from "../table/Table";
 export type Competition = {
   createdAt: Date;
   id: string;
-  name: string | null;
+  name: string;
   tables?: Array<Table>;
   updatedAt: Date;
 };

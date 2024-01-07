@@ -65,11 +65,9 @@ export class TableResolverBase {
             }
           : undefined,
 
-        team: args.data.team
-          ? {
-              connect: args.data.team,
-            }
-          : undefined,
+        team: {
+          connect: args.data.team,
+        },
       },
     });
   }
@@ -90,11 +88,9 @@ export class TableResolverBase {
               }
             : undefined,
 
-          team: args.data.team
-            ? {
-                connect: args.data.team,
-              }
-            : undefined,
+          team: {
+            connect: args.data.team,
+          },
         },
       });
     } catch (error) {

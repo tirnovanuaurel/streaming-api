@@ -3,13 +3,13 @@ import { TeamWhereUniqueInput } from "../team/TeamWhereUniqueInput";
 
 export type TableCreateInput = {
   competition?: CompetitionWhereUniqueInput | null;
-  drawn?: number | null;
-  goalsConceded?: number | null;
-  goalsDifference?: number | null;
-  goalsScored?: number | null;
-  lost?: number | null;
-  played?: number | null;
-  points?: number | null;
-  team?: TeamWhereUniqueInput | null;
-  won?: number | null;
+  drawn: number;
+  goalsConceded: number;
+  goalsDifference: number;
+  goalsScored: number;
+  lost: number;
+  played: number;
+  points: number;
+  team: TeamWhereUniqueInput;
+  won: number;
 };

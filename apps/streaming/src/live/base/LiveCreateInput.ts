@@ -11,53 +11,41 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsOptional, IsString } from "class-validator";
+import { IsInt, IsString } from "class-validator";
 
 @InputType()
 class LiveCreateInput {
   @ApiProperty({
-    required: false,
+    required: true,
     type: Number,
   })
   @IsInt()
-  @IsOptional()
-  @Field(() => Number, {
-    nullable: true,
-  })
-  awayScore?: number | null;
+  @Field(() => Number)
+  awayScore!: number;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: String,
   })
   @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  awayTeam?: string | null;
+  @Field(() => String)
+  awayTeam!: string;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: Number,
   })
   @IsInt()
-  @IsOptional()
-  @Field(() => Number, {
-    nullable: true,
-  })
-  homeScore?: number | null;
+  @Field(() => Number)
+  homeScore!: number;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: String,
   })
   @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  homeTeam?: string | null;
+  @Field(() => String)
+  homeTeam!: string;
 }
 
 export { LiveCreateInput as LiveCreateInput };

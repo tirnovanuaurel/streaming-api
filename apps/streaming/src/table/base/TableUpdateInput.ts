@@ -39,7 +39,7 @@ class TableUpdateInput {
   @Field(() => Number, {
     nullable: true,
   })
-  drawn?: number | null;
+  drawn?: number;
 
   @ApiProperty({
     required: false,
@@ -50,7 +50,7 @@ class TableUpdateInput {
   @Field(() => Number, {
     nullable: true,
   })
-  goalsConceded?: number | null;
+  goalsConceded?: number;
 
   @ApiProperty({
     required: false,
@@ -61,7 +61,7 @@ class TableUpdateInput {
   @Field(() => Number, {
     nullable: true,
   })
-  goalsDifference?: number | null;
+  goalsDifference?: number;
 
   @ApiProperty({
     required: false,
@@ -72,7 +72,7 @@ class TableUpdateInput {
   @Field(() => Number, {
     nullable: true,
   })
-  goalsScored?: number | null;
+  goalsScored?: number;
 
   @ApiProperty({
     required: false,
@@ -83,7 +83,7 @@ class TableUpdateInput {
   @Field(() => Number, {
     nullable: true,
   })
-  lost?: number | null;
+  lost?: number;
 
   @ApiProperty({
     required: false,
@@ -94,7 +94,7 @@ class TableUpdateInput {
   @Field(() => Number, {
     nullable: true,
   })
-  played?: number | null;
+  played?: number;
 
   @ApiProperty({
     required: false,
@@ -105,7 +105,7 @@ class TableUpdateInput {
   @Field(() => Number, {
     nullable: true,
   })
-  points?: number | null;
+  points?: number;
 
   @ApiProperty({
     required: false,
@@ -117,7 +117,7 @@ class TableUpdateInput {
   @Field(() => TeamWhereUniqueInput, {
     nullable: true,
   })
-  team?: TeamWhereUniqueInput | null;
+  team?: TeamWhereUniqueInput;
 
   @ApiProperty({
     required: false,
@@ -128,7 +128,7 @@ class TableUpdateInput {
   @Field(() => Number, {
     nullable: true,
   })
-  won?: number | null;
+  won?: number;
 }
 
 export { TableUpdateInput as TableUpdateInput };

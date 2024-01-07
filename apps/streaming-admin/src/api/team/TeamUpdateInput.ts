@@ -1,7 +1,7 @@
 import { TableUpdateManyWithoutTeamsInput } from "./TableUpdateManyWithoutTeamsInput";
 
 export type TeamUpdateInput = {
-  logo?: string | null;
-  name?: string | null;
+  logo?: string;
+  name?: string;
   tables?: TableUpdateManyWithoutTeamsInput;
 };

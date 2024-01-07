@@ -24,7 +24,7 @@ class LiveUpdateInput {
   @Field(() => Number, {
     nullable: true,
   })
-  awayScore?: number | null;
+  awayScore?: number;
 
   @ApiProperty({
     required: false,
@@ -35,7 +35,7 @@ class LiveUpdateInput {
   @Field(() => String, {
     nullable: true,
   })
-  awayTeam?: string | null;
+  awayTeam?: string;
 
   @ApiProperty({
     required: false,
@@ -46,7 +46,7 @@ class LiveUpdateInput {
   @Field(() => Number, {
     nullable: true,
   })
-  homeScore?: number | null;
+  homeScore?: number;
 
   @ApiProperty({
     required: false,
@@ -57,7 +57,7 @@ class LiveUpdateInput {
   @Field(() => String, {
     nullable: true,
   })
-  homeTeam?: string | null;
+  homeTeam?: string;
 }
 
 export { LiveUpdateInput as LiveUpdateInput };

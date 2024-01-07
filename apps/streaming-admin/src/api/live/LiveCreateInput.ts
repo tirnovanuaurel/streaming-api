@@ -1,6 +1,6 @@
 export type LiveCreateInput = {
-  awayScore?: number | null;
-  awayTeam?: string | null;
-  homeScore?: number | null;
-  homeTeam?: string | null;
+  awayScore: number;
+  awayTeam: string;
+  homeScore: number;
+  homeTeam: string;
 };
