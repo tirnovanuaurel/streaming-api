@@ -21,6 +21,14 @@ import { TableList } from "./table/TableList";
 import { TableCreate } from "./table/TableCreate";
 import { TableEdit } from "./table/TableEdit";
 import { TableShow } from "./table/TableShow";
+import { SettingList } from "./setting/SettingList";
+import { SettingCreate } from "./setting/SettingCreate";
+import { SettingEdit } from "./setting/SettingEdit";
+import { SettingShow } from "./setting/SettingShow";
+import { ChannelNewList } from "./channelNew/ChannelNewList";
+import { ChannelNewCreate } from "./channelNew/ChannelNewCreate";
+import { ChannelNewEdit } from "./channelNew/ChannelNewEdit";
+import { ChannelNewShow } from "./channelNew/ChannelNewShow";
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -74,6 +82,20 @@ const App = (): React.ReactElement => {
           edit={TableEdit}
           create={TableCreate}
           show={TableShow}
+        />
+        <Resource
+          name="Setting"
+          list={SettingList}
+          edit={SettingEdit}
+          create={SettingCreate}
+          show={SettingShow}
+        />
+        <Resource
+          name="ChannelNew"
+          list={ChannelNewList}
+          edit={ChannelNewEdit}
+          create={ChannelNewCreate}
+          show={ChannelNewShow}
         />
       </Admin>
     </div>

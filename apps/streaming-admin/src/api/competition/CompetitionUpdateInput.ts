@@ -1,6 +1,6 @@
 import { TableUpdateManyWithoutCompetitionsInput } from "./TableUpdateManyWithoutCompetitionsInput";
 
 export type CompetitionUpdateInput = {
-  name?: string | null;
+  name?: string;
   tables?: TableUpdateManyWithoutCompetitionsInput;
 };

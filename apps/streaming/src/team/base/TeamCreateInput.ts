@@ -11,33 +11,27 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, ValidateNested } from "class-validator";
+import { IsString, ValidateNested, IsOptional } from "class-validator";
 import { TableCreateNestedManyWithoutTeamsInput } from "./TableCreateNestedManyWithoutTeamsInput";
 import { Type } from "class-transformer";
 
 @InputType()
 class TeamCreateInput {
   @ApiProperty({
-    required: false,
+    required: true,
     type: String,
   })
   @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  logo?: string | null;
+  @Field(() => String)
+  logo!: string;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: String,
   })
   @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  name?: string | null;
+  @Field(() => String)
+  name!: string;
 
   @ApiProperty({
     required: false,

@@ -3,6 +3,8 @@ import { CompetitionModule } from "./competition/competition.module";
 import { TeamModule } from "./team/team.module";
 import { LiveModule } from "./live/live.module";
 import { TableModule } from "./table/table.module";
+import { SettingModule } from "./setting/setting.module";
+import { ChannelNewModule } from "./channelNew/channelNew.module";
 import { HealthModule } from "./health/health.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { SecretsManagerModule } from "./providers/secrets/secretsManager.module";
@@ -19,6 +21,8 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
     TeamModule,
     LiveModule,
     TableModule,
+    SettingModule,
+    ChannelNewModule,
     HealthModule,
     PrismaModule,
     SecretsManagerModule,

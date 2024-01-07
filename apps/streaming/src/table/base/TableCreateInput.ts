@@ -31,104 +31,77 @@ class TableCreateInput {
   competition?: CompetitionWhereUniqueInput | null;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: Number,
   })
   @IsInt()
-  @IsOptional()
-  @Field(() => Number, {
-    nullable: true,
-  })
-  drawn?: number | null;
+  @Field(() => Number)
+  drawn!: number;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: Number,
   })
   @IsInt()
-  @IsOptional()
-  @Field(() => Number, {
-    nullable: true,
-  })
-  goalsConceded?: number | null;
+  @Field(() => Number)
+  goalsConceded!: number;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: Number,
   })
   @IsInt()
-  @IsOptional()
-  @Field(() => Number, {
-    nullable: true,
-  })
-  goalsDifference?: number | null;
+  @Field(() => Number)
+  goalsDifference!: number;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: Number,
   })
   @IsInt()
-  @IsOptional()
-  @Field(() => Number, {
-    nullable: true,
-  })
-  goalsScored?: number | null;
+  @Field(() => Number)
+  goalsScored!: number;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: Number,
   })
   @IsInt()
-  @IsOptional()
-  @Field(() => Number, {
-    nullable: true,
-  })
-  lost?: number | null;
+  @Field(() => Number)
+  lost!: number;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: Number,
   })
   @IsInt()
-  @IsOptional()
-  @Field(() => Number, {
-    nullable: true,
-  })
-  played?: number | null;
+  @Field(() => Number)
+  played!: number;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: Number,
   })
   @IsInt()
-  @IsOptional()
-  @Field(() => Number, {
-    nullable: true,
-  })
-  points?: number | null;
+  @Field(() => Number)
+  points!: number;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: () => TeamWhereUniqueInput,
   })
   @ValidateNested()
   @Type(() => TeamWhereUniqueInput)
-  @IsOptional()
-  @Field(() => TeamWhereUniqueInput, {
-    nullable: true,
-  })
-  team?: TeamWhereUniqueInput | null;
+  @Field(() => TeamWhereUniqueInput)
+  team!: TeamWhereUniqueInput;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: Number,
   })
   @IsInt()
-  @IsOptional()
-  @Field(() => Number, {
-    nullable: true,
-  })
-  won?: number | null;
+  @Field(() => Number)
+  won!: number;
 }
 
 export { TableCreateInput as TableCreateInput };

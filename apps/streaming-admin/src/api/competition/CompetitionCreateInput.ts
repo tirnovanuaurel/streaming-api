@@ -1,6 +1,6 @@
 import { TableCreateNestedManyWithoutCompetitionsInput } from "./TableCreateNestedManyWithoutCompetitionsInput";
 
 export type CompetitionCreateInput = {
-  name?: string | null;
+  name: string;
   tables?: TableCreateNestedManyWithoutCompetitionsInput;
 };

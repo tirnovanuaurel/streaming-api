@@ -38,11 +38,9 @@ export class TableControllerBase {
             }
           : undefined,
 
-        team: data.team
-          ? {
-              connect: data.team,
-            }
-          : undefined,
+        team: {
+          connect: data.team,
+        },
       },
       select: {
         competition: {
@@ -171,11 +169,9 @@ export class TableControllerBase {
               }
             : undefined,
 
-          team: data.team
-            ? {
-                connect: data.team,
-              }
-            : undefined,
+          team: {
+            connect: data.team,
+          },
         },
         select: {
           competition: {

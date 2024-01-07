@@ -1,18 +1,18 @@
 import { CompetitionWhereUniqueInput } from "../competition/CompetitionWhereUniqueInput";
-import { IntNullableFilter } from "../../util/IntNullableFilter";
+import { IntFilter } from "../../util/IntFilter";
 import { StringFilter } from "../../util/StringFilter";
 import { TeamWhereUniqueInput } from "../team/TeamWhereUniqueInput";
 
 export type TableWhereInput = {
   competition?: CompetitionWhereUniqueInput;
-  drawn?: IntNullableFilter;
-  goalsConceded?: IntNullableFilter;
-  goalsDifference?: IntNullableFilter;
-  goalsScored?: IntNullableFilter;
+  drawn?: IntFilter;
+  goalsConceded?: IntFilter;
+  goalsDifference?: IntFilter;
+  goalsScored?: IntFilter;
   id?: StringFilter;
-  lost?: IntNullableFilter;
-  played?: IntNullableFilter;
-  points?: IntNullableFilter;
+  lost?: IntFilter;
+  played?: IntFilter;
+  points?: IntFilter;
   team?: TeamWhereUniqueInput;
-  won?: IntNullableFilter;
+  won?: IntFilter;
 };

@@ -11,32 +11,26 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsOptional, IsString, IsDate } from "class-validator";
+import { IsInt, IsString, IsDate } from "class-validator";
 import { Type } from "class-transformer";
 
 @ObjectType()
 class Live {
   @ApiProperty({
-    required: false,
+    required: true,
     type: Number,
   })
   @IsInt()
-  @IsOptional()
-  @Field(() => Number, {
-    nullable: true,
-  })
-  awayScore!: number | null;
+  @Field(() => Number)
+  awayScore!: number;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: String,
   })
   @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  awayTeam!: string | null;
+  @Field(() => String)
+  awayTeam!: string;
 
   @ApiProperty({
     required: true,
@@ -47,26 +41,20 @@ class Live {
   createdAt!: Date;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: Number,
   })
   @IsInt()
-  @IsOptional()
-  @Field(() => Number, {
-    nullable: true,
-  })
-  homeScore!: number | null;
+  @Field(() => Number)
+  homeScore!: number;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: String,
   })
   @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  homeTeam!: string | null;
+  @Field(() => String)
+  homeTeam!: string;
 
   @ApiProperty({
     required: true,

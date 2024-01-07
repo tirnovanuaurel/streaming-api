@@ -10,7 +10,7 @@ generator client {
 model Competition {
   createdAt DateTime @default(now())
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String?  @unique
+  name      String   @unique
   tables    Table[]
   updatedAt DateTime @updatedAt
 }
@@ -18,18 +18,18 @@ model Competition {
 model Team {
   createdAt DateTime @default(now())
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  logo      String?
-  name      String?  @unique
+  logo      String
+  name      String   @unique
   tables    Table[]
   updatedAt DateTime @updatedAt
 }
 
 model Live {
-  awayScore Int?
-  awayTeam  String?
+  awayScore Int      @default(0)
+  awayTeam  String
   createdAt DateTime @default(now())
-  homeScore Int?
-  homeTeam  String?
+  homeScore Int      @default(0)
+  homeTeam  String
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   updatedAt DateTime @updatedAt
 }
@@ -38,16 +38,35 @@ model Table {
   competition     Competition? @relation(fields: [competitionId], references: [id])
   competitionId   String?      @db.ObjectId
   createdAt       DateTime     @default(now())
-  drawn           Int?
-  goalsConceded   Int?
-  goalsDifference Int?
-  goalsScored     Int?
+  drawn           Int          @default(0)
+  goalsConceded   Int          @default(0)
+  goalsDifference Int          @default(0)
+  goalsScored     Int          @default(0)
   id              String       @id @default(auto()) @map("_id") @db.ObjectId
-  lost            Int?
-  played          Int?
-  points          Int?
-  team            Team?        @relation(fields: [teamId], references: [id])
-  teamId          String?      @db.ObjectId
+  lost            Int          @default(0)
+  played          Int          @default(0)
+  points          Int          @default(0)
+  team            Team         @relation(fields: [teamId], references: [id])
+  teamId          String       @db.ObjectId
   updatedAt       DateTime     @updatedAt
-  won             Int?
+  won             Int          @default(0)
+}
+
+model Setting {
+  channelLogo String?
+  channelName String
+  createdAt   DateTime @default(now())
+  facebook    String?
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  instagram   String?
+  twiiter     String?
+  updatedAt   DateTime @updatedAt
+}
+
+model ChannelNew {
+  content   String?
+  createdAt DateTime @default(now())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String?
+  updatedAt DateTime @updatedAt
 }

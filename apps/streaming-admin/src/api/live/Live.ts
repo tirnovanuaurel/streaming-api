@@ -1,9 +1,9 @@
 export type Live = {
-  awayScore: number | null;
-  awayTeam: string | null;
+  awayScore: number;
+  awayTeam: string;
   createdAt: Date;
-  homeScore: number | null;
-  homeTeam: string | null;
+  homeScore: number;
+  homeTeam: string;
   id: string;
   updatedAt: Date;
 };

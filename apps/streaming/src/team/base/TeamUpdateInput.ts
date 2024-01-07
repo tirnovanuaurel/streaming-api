@@ -26,7 +26,7 @@ class TeamUpdateInput {
   @Field(() => String, {
     nullable: true,
   })
-  logo?: string | null;
+  logo?: string;
 
   @ApiProperty({
     required: false,
@@ -37,7 +37,7 @@ class TeamUpdateInput {
   @Field(() => String, {
     nullable: true,
   })
-  name?: string | null;
+  name?: string;
 
   @ApiProperty({
     required: false,
