@@ -11,13 +11,26 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IntFilter } from "../../util/IntFilter";
+import { JsonFilter } from "../../util/JsonFilter";
 import { Type } from "class-transformer";
 import { IsOptional } from "class-validator";
+import { IntFilter } from "../../util/IntFilter";
 import { StringFilter } from "../../util/StringFilter";
+import { StringNullableFilter } from "../../util/StringNullableFilter";
 
 @InputType()
 class LiveWhereInput {
+  @ApiProperty({
+    required: false,
+    type: JsonFilter,
+  })
+  @Type(() => JsonFilter)
+  @IsOptional()
+  @Field(() => JsonFilter, {
+    nullable: true,
+  })
+  awayGoals?: JsonFilter;
+
   @ApiProperty({
     required: false,
     type: IntFilter,
@@ -42,6 +55,28 @@ class LiveWhereInput {
 
   @ApiProperty({
     required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  awayTeamBadge?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: JsonFilter,
+  })
+  @Type(() => JsonFilter)
+  @IsOptional()
+  @Field(() => JsonFilter, {
+    nullable: true,
+  })
+  homeGoals?: JsonFilter;
+
+  @ApiProperty({
+    required: false,
     type: IntFilter,
   })
   @Type(() => IntFilter)
@@ -61,6 +96,17 @@ class LiveWhereInput {
     nullable: true,
   })
   homeTeam?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  homeTeamBadge?: StringNullableFilter;
 
   @ApiProperty({
     required: false,

@@ -25,13 +25,17 @@ model Team {
 }
 
 model Live {
-  awayScore Int      @default(0)
-  awayTeam  String
-  createdAt DateTime @default(now())
-  homeScore Int      @default(0)
-  homeTeam  String
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  updatedAt DateTime @updatedAt
+  awayGoals     Json?
+  awayScore     Int      @default(0)
+  awayTeam      String
+  awayTeamBadge String?
+  createdAt     DateTime @default(now())
+  homeGoals     Json?
+  homeScore     Int      @default(0)
+  homeTeam      String
+  homeTeamBadge String?
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  updatedAt     DateTime @updatedAt
 }
 
 model Table {

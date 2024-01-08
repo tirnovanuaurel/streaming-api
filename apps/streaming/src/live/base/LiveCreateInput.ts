@@ -11,10 +11,23 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsString } from "class-validator";
+import { IsJSONValue } from "../../validators";
+import { IsOptional, IsInt, IsString } from "class-validator";
+import { GraphQLJSON } from "graphql-type-json";
+import { InputJsonValue } from "../../types";
 
 @InputType()
 class LiveCreateInput {
+  @ApiProperty({
+    required: false,
+  })
+  @IsJSONValue()
+  @IsOptional()
+  @Field(() => GraphQLJSON, {
+    nullable: true,
+  })
+  awayGoals?: InputJsonValue;
+
   @ApiProperty({
     required: true,
     type: Number,
@@ -32,6 +45,27 @@ class LiveCreateInput {
   awayTeam!: string;
 
   @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  awayTeamBadge?: string | null;
+
+  @ApiProperty({
+    required: false,
+  })
+  @IsJSONValue()
+  @IsOptional()
+  @Field(() => GraphQLJSON, {
+    nullable: true,
+  })
+  homeGoals?: InputJsonValue;
+
+  @ApiProperty({
     required: true,
     type: Number,
   })
@@ -46,6 +80,17 @@ class LiveCreateInput {
   @IsString()
   @Field(() => String)
   homeTeam!: string;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  homeTeamBadge?: string | null;
 }
 
 export { LiveCreateInput as LiveCreateInput };
