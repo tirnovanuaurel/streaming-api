@@ -13,6 +13,12 @@ import * as graphql from "@nestjs/graphql";
 import { GraphQLError } from "graphql";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
+import * as nestAccessControl from "nest-access-control";
+import * as gqlACGuard from "../../auth/gqlAC.guard";
+import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
+import * as common from "@nestjs/common";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { Competition } from "./Competition";
 import { CompetitionCountArgs } from "./CompetitionCountArgs";
 import { CompetitionFindManyArgs } from "./CompetitionFindManyArgs";
@@ -23,10 +29,20 @@ import { DeleteCompetitionArgs } from "./DeleteCompetitionArgs";
 import { TableFindManyArgs } from "../../table/base/TableFindManyArgs";
 import { Table } from "../../table/base/Table";
 import { CompetitionService } from "../competition.service";
+@common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Competition)
 export class CompetitionResolverBase {
-  constructor(protected readonly service: CompetitionService) {}
+  constructor(
+    protected readonly service: CompetitionService,
+    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
+  ) {}
 
+  @graphql.Query(() => MetaQueryPayload)
+  @nestAccessControl.UseRoles({
+    resource: "Competition",
+    action: "read",
+    possession: "any",
+  })
   async _competitionsMeta(
     @graphql.Args() args: CompetitionCountArgs
   ): Promise<MetaQueryPayload> {
@@ -36,14 +52,26 @@ export class CompetitionResolverBase {
     };
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [Competition])
+  @nestAccessControl.UseRoles({
+    resource: "Competition",
+    action: "read",
+    possession: "any",
+  })
   async competitions(
     @graphql.Args() args: CompetitionFindManyArgs
   ): Promise<Competition[]> {
     return this.service.competitions(args);
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => Competition, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Competition",
+    action: "read",
+    possession: "own",
+  })
   async competition(
     @graphql.Args() args: CompetitionFindUniqueArgs
   ): Promise<Competition | null> {
@@ -54,7 +82,13 @@ export class CompetitionResolverBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Competition)
+  @nestAccessControl.UseRoles({
+    resource: "Competition",
+    action: "create",
+    possession: "any",
+  })
   async createCompetition(
     @graphql.Args() args: CreateCompetitionArgs
   ): Promise<Competition> {
@@ -64,7 +98,13 @@ export class CompetitionResolverBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Competition)
+  @nestAccessControl.UseRoles({
+    resource: "Competition",
+    action: "update",
+    possession: "any",
+  })
   async updateCompetition(
     @graphql.Args() args: UpdateCompetitionArgs
   ): Promise<Competition | null> {
@@ -84,6 +124,11 @@ export class CompetitionResolverBase {
   }
 
   @graphql.Mutation(() => Competition)
+  @nestAccessControl.UseRoles({
+    resource: "Competition",
+    action: "delete",
+    possession: "any",
+  })
   async deleteCompetition(
     @graphql.Args() args: DeleteCompetitionArgs
   ): Promise<Competition | null> {
@@ -99,7 +144,13 @@ export class CompetitionResolverBase {
     }
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [Table], { name: "tables" })
+  @nestAccessControl.UseRoles({
+    resource: "Table",
+    action: "read",
+    possession: "any",
+  })
   async findTables(
     @graphql.Parent() parent: Competition,
     @graphql.Args() args: TableFindManyArgs

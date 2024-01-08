@@ -16,17 +16,35 @@ import * as errors from "../../errors";
 import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
+import * as nestAccessControl from "nest-access-control";
+import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { ChannelNewService } from "../channelNew.service";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { ChannelNewCreateInput } from "./ChannelNewCreateInput";
 import { ChannelNew } from "./ChannelNew";
 import { ChannelNewFindManyArgs } from "./ChannelNewFindManyArgs";
 import { ChannelNewWhereUniqueInput } from "./ChannelNewWhereUniqueInput";
 import { ChannelNewUpdateInput } from "./ChannelNewUpdateInput";
 
+@swagger.ApiBearerAuth()
+@common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class ChannelNewControllerBase {
-  constructor(protected readonly service: ChannelNewService) {}
+  constructor(
+    protected readonly service: ChannelNewService,
+    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
+  ) {}
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post()
   @swagger.ApiCreatedResponse({ type: ChannelNew })
+  @nestAccessControl.UseRoles({
+    resource: "ChannelNew",
+    action: "create",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async createChannelNew(
     @common.Body() data: ChannelNewCreateInput
   ): Promise<ChannelNew> {
@@ -42,9 +60,18 @@ export class ChannelNewControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [ChannelNew] })
   @ApiNestedQuery(ChannelNewFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "ChannelNew",
+    action: "read",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async channelNews(@common.Req() request: Request): Promise<ChannelNew[]> {
     const args = plainToClass(ChannelNewFindManyArgs, request.query);
     return this.service.channelNews({
@@ -59,9 +86,18 @@ export class ChannelNewControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: ChannelNew })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "ChannelNew",
+    action: "read",
+    possession: "own",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async channelNew(
     @common.Param() params: ChannelNewWhereUniqueInput
   ): Promise<ChannelNew | null> {
@@ -83,9 +119,18 @@ export class ChannelNewControllerBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: ChannelNew })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "ChannelNew",
+    action: "update",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async updateChannelNew(
     @common.Param() params: ChannelNewWhereUniqueInput,
     @common.Body() data: ChannelNewUpdateInput
@@ -115,6 +160,14 @@ export class ChannelNewControllerBase {
   @common.Delete("/:id")
   @swagger.ApiOkResponse({ type: ChannelNew })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "ChannelNew",
+    action: "delete",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async deleteChannelNew(
     @common.Param() params: ChannelNewWhereUniqueInput
   ): Promise<ChannelNew | null> {

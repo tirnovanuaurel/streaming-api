@@ -13,6 +13,12 @@ import * as graphql from "@nestjs/graphql";
 import { GraphQLError } from "graphql";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
+import * as nestAccessControl from "nest-access-control";
+import * as gqlACGuard from "../../auth/gqlAC.guard";
+import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
+import * as common from "@nestjs/common";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { Live } from "./Live";
 import { LiveCountArgs } from "./LiveCountArgs";
 import { LiveFindManyArgs } from "./LiveFindManyArgs";
@@ -21,10 +27,20 @@ import { CreateLiveArgs } from "./CreateLiveArgs";
 import { UpdateLiveArgs } from "./UpdateLiveArgs";
 import { DeleteLiveArgs } from "./DeleteLiveArgs";
 import { LiveService } from "../live.service";
+@common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Live)
 export class LiveResolverBase {
-  constructor(protected readonly service: LiveService) {}
+  constructor(
+    protected readonly service: LiveService,
+    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
+  ) {}
 
+  @graphql.Query(() => MetaQueryPayload)
+  @nestAccessControl.UseRoles({
+    resource: "Live",
+    action: "read",
+    possession: "any",
+  })
   async _livesMeta(
     @graphql.Args() args: LiveCountArgs
   ): Promise<MetaQueryPayload> {
@@ -34,12 +50,24 @@ export class LiveResolverBase {
     };
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [Live])
+  @nestAccessControl.UseRoles({
+    resource: "Live",
+    action: "read",
+    possession: "any",
+  })
   async lives(@graphql.Args() args: LiveFindManyArgs): Promise<Live[]> {
     return this.service.lives(args);
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => Live, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Live",
+    action: "read",
+    possession: "own",
+  })
   async live(@graphql.Args() args: LiveFindUniqueArgs): Promise<Live | null> {
     const result = await this.service.live(args);
     if (result === null) {
@@ -48,7 +76,13 @@ export class LiveResolverBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Live)
+  @nestAccessControl.UseRoles({
+    resource: "Live",
+    action: "create",
+    possession: "any",
+  })
   async createLive(@graphql.Args() args: CreateLiveArgs): Promise<Live> {
     return await this.service.createLive({
       ...args,
@@ -56,7 +90,13 @@ export class LiveResolverBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Live)
+  @nestAccessControl.UseRoles({
+    resource: "Live",
+    action: "update",
+    possession: "any",
+  })
   async updateLive(@graphql.Args() args: UpdateLiveArgs): Promise<Live | null> {
     try {
       return await this.service.updateLive({
@@ -74,6 +114,11 @@ export class LiveResolverBase {
   }
 
   @graphql.Mutation(() => Live)
+  @nestAccessControl.UseRoles({
+    resource: "Live",
+    action: "delete",
+    possession: "any",
+  })
   async deleteLive(@graphql.Args() args: DeleteLiveArgs): Promise<Live | null> {
     try {
       return await this.service.deleteLive(args);

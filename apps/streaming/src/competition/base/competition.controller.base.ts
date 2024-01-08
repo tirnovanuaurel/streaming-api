@@ -16,7 +16,11 @@ import * as errors from "../../errors";
 import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
+import * as nestAccessControl from "nest-access-control";
+import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { CompetitionService } from "../competition.service";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { CompetitionCreateInput } from "./CompetitionCreateInput";
 import { Competition } from "./Competition";
 import { CompetitionFindManyArgs } from "./CompetitionFindManyArgs";
@@ -26,10 +30,24 @@ import { TableFindManyArgs } from "../../table/base/TableFindManyArgs";
 import { Table } from "../../table/base/Table";
 import { TableWhereUniqueInput } from "../../table/base/TableWhereUniqueInput";
 
+@swagger.ApiBearerAuth()
+@common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class CompetitionControllerBase {
-  constructor(protected readonly service: CompetitionService) {}
+  constructor(
+    protected readonly service: CompetitionService,
+    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
+  ) {}
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Competition })
+  @nestAccessControl.UseRoles({
+    resource: "Competition",
+    action: "create",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async createCompetition(
     @common.Body() data: CompetitionCreateInput
   ): Promise<Competition> {
@@ -44,9 +62,18 @@ export class CompetitionControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [Competition] })
   @ApiNestedQuery(CompetitionFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "Competition",
+    action: "read",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async competitions(@common.Req() request: Request): Promise<Competition[]> {
     const args = plainToClass(CompetitionFindManyArgs, request.query);
     return this.service.competitions({
@@ -60,9 +87,18 @@ export class CompetitionControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Competition })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "Competition",
+    action: "read",
+    possession: "own",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async competition(
     @common.Param() params: CompetitionWhereUniqueInput
   ): Promise<Competition | null> {
@@ -83,9 +119,18 @@ export class CompetitionControllerBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Competition })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "Competition",
+    action: "update",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async updateCompetition(
     @common.Param() params: CompetitionWhereUniqueInput,
     @common.Body() data: CompetitionUpdateInput
@@ -114,6 +159,14 @@ export class CompetitionControllerBase {
   @common.Delete("/:id")
   @swagger.ApiOkResponse({ type: Competition })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "Competition",
+    action: "delete",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async deleteCompetition(
     @common.Param() params: CompetitionWhereUniqueInput
   ): Promise<Competition | null> {
@@ -137,8 +190,14 @@ export class CompetitionControllerBase {
     }
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id/tables")
   @ApiNestedQuery(TableFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "Table",
+    action: "read",
+    possession: "any",
+  })
   async findTables(
     @common.Req() request: Request,
     @common.Param() params: CompetitionWhereUniqueInput
@@ -182,6 +241,11 @@ export class CompetitionControllerBase {
   }
 
   @common.Post("/:id/tables")
+  @nestAccessControl.UseRoles({
+    resource: "Competition",
+    action: "update",
+    possession: "any",
+  })
   async connectTables(
     @common.Param() params: CompetitionWhereUniqueInput,
     @common.Body() body: TableWhereUniqueInput[]
@@ -199,6 +263,11 @@ export class CompetitionControllerBase {
   }
 
   @common.Patch("/:id/tables")
+  @nestAccessControl.UseRoles({
+    resource: "Competition",
+    action: "update",
+    possession: "any",
+  })
   async updateTables(
     @common.Param() params: CompetitionWhereUniqueInput,
     @common.Body() body: TableWhereUniqueInput[]
@@ -216,6 +285,11 @@ export class CompetitionControllerBase {
   }
 
   @common.Delete("/:id/tables")
+  @nestAccessControl.UseRoles({
+    resource: "Competition",
+    action: "update",
+    possession: "any",
+  })
   async disconnectTables(
     @common.Param() params: CompetitionWhereUniqueInput,
     @common.Body() body: TableWhereUniqueInput[]
