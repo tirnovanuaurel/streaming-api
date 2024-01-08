@@ -16,17 +16,35 @@ import * as errors from "../../errors";
 import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
+import * as nestAccessControl from "nest-access-control";
+import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { LiveService } from "../live.service";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { LiveCreateInput } from "./LiveCreateInput";
 import { Live } from "./Live";
 import { LiveFindManyArgs } from "./LiveFindManyArgs";
 import { LiveWhereUniqueInput } from "./LiveWhereUniqueInput";
 import { LiveUpdateInput } from "./LiveUpdateInput";
 
+@swagger.ApiBearerAuth()
+@common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class LiveControllerBase {
-  constructor(protected readonly service: LiveService) {}
+  constructor(
+    protected readonly service: LiveService,
+    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
+  ) {}
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Live })
+  @nestAccessControl.UseRoles({
+    resource: "Live",
+    action: "create",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async createLive(@common.Body() data: LiveCreateInput): Promise<Live> {
     return await this.service.createLive({
       data: data,
@@ -46,9 +64,18 @@ export class LiveControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [Live] })
   @ApiNestedQuery(LiveFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "Live",
+    action: "read",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async lives(@common.Req() request: Request): Promise<Live[]> {
     const args = plainToClass(LiveFindManyArgs, request.query);
     return this.service.lives({
@@ -69,9 +96,18 @@ export class LiveControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Live })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "Live",
+    action: "read",
+    possession: "own",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async live(
     @common.Param() params: LiveWhereUniqueInput
   ): Promise<Live | null> {
@@ -99,9 +135,18 @@ export class LiveControllerBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Live })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "Live",
+    action: "update",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async updateLive(
     @common.Param() params: LiveWhereUniqueInput,
     @common.Body() data: LiveUpdateInput
@@ -137,6 +182,14 @@ export class LiveControllerBase {
   @common.Delete("/:id")
   @swagger.ApiOkResponse({ type: Live })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "Live",
+    action: "delete",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async deleteLive(
     @common.Param() params: LiveWhereUniqueInput
   ): Promise<Live | null> {

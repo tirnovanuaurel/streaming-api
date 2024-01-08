@@ -16,17 +16,35 @@ import * as errors from "../../errors";
 import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
+import * as nestAccessControl from "nest-access-control";
+import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { TableService } from "../table.service";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { TableCreateInput } from "./TableCreateInput";
 import { Table } from "./Table";
 import { TableFindManyArgs } from "./TableFindManyArgs";
 import { TableWhereUniqueInput } from "./TableWhereUniqueInput";
 import { TableUpdateInput } from "./TableUpdateInput";
 
+@swagger.ApiBearerAuth()
+@common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class TableControllerBase {
-  constructor(protected readonly service: TableService) {}
+  constructor(
+    protected readonly service: TableService,
+    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
+  ) {}
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Table })
+  @nestAccessControl.UseRoles({
+    resource: "Table",
+    action: "create",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async createTable(@common.Body() data: TableCreateInput): Promise<Table> {
     return await this.service.createTable({
       data: {
@@ -71,9 +89,18 @@ export class TableControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [Table] })
   @ApiNestedQuery(TableFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "Table",
+    action: "read",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async tables(@common.Req() request: Request): Promise<Table[]> {
     const args = plainToClass(TableFindManyArgs, request.query);
     return this.service.tables({
@@ -107,9 +134,18 @@ export class TableControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Table })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "Table",
+    action: "read",
+    possession: "own",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async table(
     @common.Param() params: TableWhereUniqueInput
   ): Promise<Table | null> {
@@ -150,9 +186,18 @@ export class TableControllerBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Table })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "Table",
+    action: "update",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async updateTable(
     @common.Param() params: TableWhereUniqueInput,
     @common.Body() data: TableUpdateInput
@@ -213,6 +258,14 @@ export class TableControllerBase {
   @common.Delete("/:id")
   @swagger.ApiOkResponse({ type: Table })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "Table",
+    action: "delete",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async deleteTable(
     @common.Param() params: TableWhereUniqueInput
   ): Promise<Table | null> {

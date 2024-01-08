@@ -74,3 +74,14 @@ model ChannelNew {
   title     String?
   updatedAt DateTime @updatedAt
 }
+
+model User {
+  createdAt DateTime @default(now())
+  firstName String?
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}

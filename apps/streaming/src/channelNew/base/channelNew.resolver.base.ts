@@ -13,6 +13,12 @@ import * as graphql from "@nestjs/graphql";
 import { GraphQLError } from "graphql";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
+import * as nestAccessControl from "nest-access-control";
+import * as gqlACGuard from "../../auth/gqlAC.guard";
+import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
+import * as common from "@nestjs/common";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { ChannelNew } from "./ChannelNew";
 import { ChannelNewCountArgs } from "./ChannelNewCountArgs";
 import { ChannelNewFindManyArgs } from "./ChannelNewFindManyArgs";
@@ -21,10 +27,20 @@ import { CreateChannelNewArgs } from "./CreateChannelNewArgs";
 import { UpdateChannelNewArgs } from "./UpdateChannelNewArgs";
 import { DeleteChannelNewArgs } from "./DeleteChannelNewArgs";
 import { ChannelNewService } from "../channelNew.service";
+@common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => ChannelNew)
 export class ChannelNewResolverBase {
-  constructor(protected readonly service: ChannelNewService) {}
+  constructor(
+    protected readonly service: ChannelNewService,
+    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
+  ) {}
 
+  @graphql.Query(() => MetaQueryPayload)
+  @nestAccessControl.UseRoles({
+    resource: "ChannelNew",
+    action: "read",
+    possession: "any",
+  })
   async _channelNewsMeta(
     @graphql.Args() args: ChannelNewCountArgs
   ): Promise<MetaQueryPayload> {
@@ -34,14 +50,26 @@ export class ChannelNewResolverBase {
     };
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [ChannelNew])
+  @nestAccessControl.UseRoles({
+    resource: "ChannelNew",
+    action: "read",
+    possession: "any",
+  })
   async channelNews(
     @graphql.Args() args: ChannelNewFindManyArgs
   ): Promise<ChannelNew[]> {
     return this.service.channelNews(args);
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => ChannelNew, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "ChannelNew",
+    action: "read",
+    possession: "own",
+  })
   async channelNew(
     @graphql.Args() args: ChannelNewFindUniqueArgs
   ): Promise<ChannelNew | null> {
@@ -52,7 +80,13 @@ export class ChannelNewResolverBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => ChannelNew)
+  @nestAccessControl.UseRoles({
+    resource: "ChannelNew",
+    action: "create",
+    possession: "any",
+  })
   async createChannelNew(
     @graphql.Args() args: CreateChannelNewArgs
   ): Promise<ChannelNew> {
@@ -62,7 +96,13 @@ export class ChannelNewResolverBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => ChannelNew)
+  @nestAccessControl.UseRoles({
+    resource: "ChannelNew",
+    action: "update",
+    possession: "any",
+  })
   async updateChannelNew(
     @graphql.Args() args: UpdateChannelNewArgs
   ): Promise<ChannelNew | null> {
@@ -82,6 +122,11 @@ export class ChannelNewResolverBase {
   }
 
   @graphql.Mutation(() => ChannelNew)
+  @nestAccessControl.UseRoles({
+    resource: "ChannelNew",
+    action: "delete",
+    possession: "any",
+  })
   async deleteChannelNew(
     @graphql.Args() args: DeleteChannelNewArgs
   ): Promise<ChannelNew | null> {
