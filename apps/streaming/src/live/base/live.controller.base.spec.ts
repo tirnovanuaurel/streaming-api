@@ -20,18 +20,22 @@ const existingId = "existingId";
 const CREATE_INPUT = {
   awayScore: 42,
   awayTeam: "exampleAwayTeam",
+  awayTeamBadge: "exampleAwayTeamBadge",
   createdAt: new Date(),
   homeScore: 42,
   homeTeam: "exampleHomeTeam",
+  homeTeamBadge: "exampleHomeTeamBadge",
   id: "exampleId",
   updatedAt: new Date(),
 };
 const CREATE_RESULT = {
   awayScore: 42,
   awayTeam: "exampleAwayTeam",
+  awayTeamBadge: "exampleAwayTeamBadge",
   createdAt: new Date(),
   homeScore: 42,
   homeTeam: "exampleHomeTeam",
+  homeTeamBadge: "exampleHomeTeamBadge",
   id: "exampleId",
   updatedAt: new Date(),
 };
@@ -39,9 +43,11 @@ const FIND_MANY_RESULT = [
   {
     awayScore: 42,
     awayTeam: "exampleAwayTeam",
+    awayTeamBadge: "exampleAwayTeamBadge",
     createdAt: new Date(),
     homeScore: 42,
     homeTeam: "exampleHomeTeam",
+    homeTeamBadge: "exampleHomeTeamBadge",
     id: "exampleId",
     updatedAt: new Date(),
   },
@@ -49,9 +55,11 @@ const FIND_MANY_RESULT = [
 const FIND_ONE_RESULT = {
   awayScore: 42,
   awayTeam: "exampleAwayTeam",
+  awayTeamBadge: "exampleAwayTeamBadge",
   createdAt: new Date(),
   homeScore: 42,
   homeTeam: "exampleHomeTeam",
+  homeTeamBadge: "exampleHomeTeamBadge",
   id: "exampleId",
   updatedAt: new Date(),
 };

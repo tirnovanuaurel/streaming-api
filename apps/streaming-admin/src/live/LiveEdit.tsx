@@ -13,8 +13,10 @@ export const LiveEdit = (props: EditProps): React.ReactElement => {
       <SimpleForm>
         <NumberInput step={1} label="away-score" source="awayScore" />
         <TextInput label="away-team" source="awayTeam" />
+        <TextInput label="away-team-badge" source="awayTeamBadge" />
         <NumberInput step={1} label="home-score" source="homeScore" />
         <TextInput label="home-team" source="homeTeam" />
+        <TextInput label="home-team-badge" source="homeTeamBadge" />
       </SimpleForm>
     </Edit>
   );

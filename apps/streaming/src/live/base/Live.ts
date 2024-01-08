@@ -11,7 +11,7 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsString, IsDate } from "class-validator";
+import { IsInt, IsString, IsOptional, IsDate } from "class-validator";
 import { Type } from "class-transformer";
 
 @ObjectType()
@@ -31,6 +31,17 @@ class Live {
   @IsString()
   @Field(() => String)
   awayTeam!: string;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  awayTeamBadge!: string | null;
 
   @ApiProperty({
     required: true,
@@ -55,6 +66,17 @@ class Live {
   @IsString()
   @Field(() => String)
   homeTeam!: string;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  homeTeamBadge!: string | null;
 
   @ApiProperty({
     required: true,

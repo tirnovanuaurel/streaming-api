@@ -15,6 +15,7 @@ import { IntFilter } from "../../util/IntFilter";
 import { Type } from "class-transformer";
 import { IsOptional } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
+import { StringNullableFilter } from "../../util/StringNullableFilter";
 
 @InputType()
 class LiveWhereInput {
@@ -42,6 +43,17 @@ class LiveWhereInput {
 
   @ApiProperty({
     required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  awayTeamBadge?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
     type: IntFilter,
   })
   @Type(() => IntFilter)
@@ -61,6 +73,17 @@ class LiveWhereInput {
     nullable: true,
   })
   homeTeam?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  homeTeamBadge?: StringNullableFilter;
 
   @ApiProperty({
     required: false,

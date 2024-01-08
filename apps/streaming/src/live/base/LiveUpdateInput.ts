@@ -39,6 +39,17 @@ class LiveUpdateInput {
 
   @ApiProperty({
     required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  awayTeamBadge?: string | null;
+
+  @ApiProperty({
+    required: false,
     type: Number,
   })
   @IsInt()
@@ -58,6 +69,17 @@ class LiveUpdateInput {
     nullable: true,
   })
   homeTeam?: string;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  homeTeamBadge?: string | null;
 }
 
 export { LiveUpdateInput as LiveUpdateInput };

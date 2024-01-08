@@ -50,6 +50,17 @@ class LiveOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
+  awayTeamBadge?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @IsOptional()
+  @IsEnum(SortOrder)
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
   createdAt?: SortOrder;
 
   @ApiProperty({
@@ -73,6 +84,17 @@ class LiveOrderByInput {
     nullable: true,
   })
   homeTeam?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @IsOptional()
+  @IsEnum(SortOrder)
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
+  homeTeamBadge?: SortOrder;
 
   @ApiProperty({
     required: false,
