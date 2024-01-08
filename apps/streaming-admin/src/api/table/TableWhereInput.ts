@@ -1,7 +1,7 @@
 import { CompetitionWhereUniqueInput } from "../competition/CompetitionWhereUniqueInput";
 import { IntFilter } from "../../util/IntFilter";
 import { StringFilter } from "../../util/StringFilter";
-import { TeamWhereUniqueInput } from "../team/TeamWhereUniqueInput";
+import { TeamListRelationFilter } from "../team/TeamListRelationFilter";
 
 export type TableWhereInput = {
   competition?: CompetitionWhereUniqueInput;
@@ -13,6 +13,6 @@ export type TableWhereInput = {
   lost?: IntFilter;
   played?: IntFilter;
   points?: IntFilter;
-  team?: TeamWhereUniqueInput;
+  team?: TeamListRelationFilter;
   won?: IntFilter;
 };

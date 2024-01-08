@@ -14,8 +14,8 @@ import { PrismaService } from "../../prisma/prisma.service";
 import {
   Prisma,
   Table, // @ts-ignore
-  Competition, // @ts-ignore
-  Team,
+  Team, // @ts-ignore
+  Competition,
 } from "@prisma/client";
 
 export class TableServiceBase {
@@ -53,19 +53,22 @@ export class TableServiceBase {
     return this.prisma.table.delete(args);
   }
 
+  async findTeam(
+    parentId: string,
+    args: Prisma.TeamFindManyArgs
+  ): Promise<Team[]> {
+    return this.prisma.table
+      .findUniqueOrThrow({
+        where: { id: parentId },
+      })
+      .team(args);
+  }
+
   async getCompetition(parentId: string): Promise<Competition | null> {
     return this.prisma.table
       .findUnique({
         where: { id: parentId },
       })
       .competition();
-  }
-
-  async getTeam(parentId: string): Promise<Team | null> {
-    return this.prisma.table
-      .findUnique({
-        where: { id: parentId },
-      })
-      .team();
   }
 }

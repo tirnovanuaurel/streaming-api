@@ -26,7 +26,6 @@ import { TeamFindUniqueArgs } from "./TeamFindUniqueArgs";
 import { CreateTeamArgs } from "./CreateTeamArgs";
 import { UpdateTeamArgs } from "./UpdateTeamArgs";
 import { DeleteTeamArgs } from "./DeleteTeamArgs";
-import { TableFindManyArgs } from "../../table/base/TableFindManyArgs";
 import { Table } from "../../table/base/Table";
 import { TeamService } from "../team.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
@@ -88,7 +87,15 @@ export class TeamResolverBase {
   async createTeam(@graphql.Args() args: CreateTeamArgs): Promise<Team> {
     return await this.service.createTeam({
       ...args,
-      data: args.data,
+      data: {
+        ...args.data,
+
+        tables: args.data.tables
+          ? {
+              connect: args.data.tables,
+            }
+          : undefined,
+      },
     });
   }
 
@@ -103,7 +110,15 @@ export class TeamResolverBase {
     try {
       return await this.service.updateTeam({
         ...args,
-        data: args.data,
+        data: {
+          ...args.data,
+
+          tables: args.data.tables
+            ? {
+                connect: args.data.tables,
+              }
+            : undefined,
+        },
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -135,22 +150,21 @@ export class TeamResolverBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => [Table], { name: "tables" })
+  @graphql.ResolveField(() => Table, {
+    nullable: true,
+    name: "tables",
+  })
   @nestAccessControl.UseRoles({
     resource: "Table",
     action: "read",
     possession: "any",
   })
-  async findTables(
-    @graphql.Parent() parent: Team,
-    @graphql.Args() args: TableFindManyArgs
-  ): Promise<Table[]> {
-    const results = await this.service.findTables(parent.id, args);
+  async getTables(@graphql.Parent() parent: Team): Promise<Table | null> {
+    const result = await this.service.getTables(parent.id);
 
-    if (!results) {
-      return [];
+    if (!result) {
+      return null;
     }
-
-    return results;
+    return result;
   }
 }

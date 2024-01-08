@@ -4,6 +4,6 @@ export type Competition = {
   createdAt: Date;
   id: string;
   name: string;
-  tables?: Array<Table>;
+  tables?: Table | null;
   updatedAt: Date;
 };

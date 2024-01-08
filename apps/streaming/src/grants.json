@@ -241,37 +241,37 @@
   },
   {
     "role": "user",
-    "resource": "Setting",
+    "resource": "AppSetting",
     "action": "read:own",
     "attributes": "*"
   },
   {
     "role": "admin",
-    "resource": "Setting",
+    "resource": "AppSetting",
     "action": "read:own",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Setting",
+    "resource": "AppSetting",
     "action": "create:any",
     "attributes": "*"
   },
   {
     "role": "admin",
-    "resource": "Setting",
+    "resource": "AppSetting",
     "action": "create:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Setting",
+    "resource": "AppSetting",
     "action": "update:any",
     "attributes": "*"
   },
   {
     "role": "admin",
-    "resource": "Setting",
+    "resource": "AppSetting",
     "action": "update:any",
     "attributes": "*"
   },

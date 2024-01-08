@@ -21,10 +21,10 @@ import { TableList } from "./table/TableList";
 import { TableCreate } from "./table/TableCreate";
 import { TableEdit } from "./table/TableEdit";
 import { TableShow } from "./table/TableShow";
-import { SettingList } from "./setting/SettingList";
-import { SettingCreate } from "./setting/SettingCreate";
-import { SettingEdit } from "./setting/SettingEdit";
-import { SettingShow } from "./setting/SettingShow";
+import { AppSettingList } from "./appSetting/AppSettingList";
+import { AppSettingCreate } from "./appSetting/AppSettingCreate";
+import { AppSettingEdit } from "./appSetting/AppSettingEdit";
+import { AppSettingShow } from "./appSetting/AppSettingShow";
 import { ChannelNewList } from "./channelNew/ChannelNewList";
 import { ChannelNewCreate } from "./channelNew/ChannelNewCreate";
 import { ChannelNewEdit } from "./channelNew/ChannelNewEdit";
@@ -88,11 +88,11 @@ const App = (): React.ReactElement => {
           show={TableShow}
         />
         <Resource
-          name="Setting"
-          list={SettingList}
-          edit={SettingEdit}
-          create={SettingCreate}
-          show={SettingShow}
+          name="AppSetting"
+          list={AppSettingList}
+          edit={AppSettingEdit}
+          create={AppSettingCreate}
+          show={AppSettingShow}
         />
         <Resource
           name="ChannelNew"

@@ -1,7 +1,7 @@
-import { TableCreateNestedManyWithoutTeamsInput } from "./TableCreateNestedManyWithoutTeamsInput";
+import { TableWhereUniqueInput } from "../table/TableWhereUniqueInput";
 
 export type TeamCreateInput = {
   logo: string;
   name: string;
-  tables?: TableCreateNestedManyWithoutTeamsInput;
+  tables?: TableWhereUniqueInput | null;
 };

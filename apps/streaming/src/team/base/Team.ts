@@ -51,12 +51,12 @@ class Team {
 
   @ApiProperty({
     required: false,
-    type: () => [Table],
+    type: () => Table,
   })
   @ValidateNested()
   @Type(() => Table)
   @IsOptional()
-  tables?: Array<Table>;
+  tables?: Table | null;
 
   @ApiProperty({
     required: true,

@@ -1,5 +1,5 @@
 import { CompetitionWhereUniqueInput } from "../competition/CompetitionWhereUniqueInput";
-import { TeamWhereUniqueInput } from "../team/TeamWhereUniqueInput";
+import { TeamCreateNestedManyWithoutTablesInput } from "./TeamCreateNestedManyWithoutTablesInput";
 
 export type TableCreateInput = {
   competition?: CompetitionWhereUniqueInput | null;
@@ -10,6 +10,6 @@ export type TableCreateInput = {
   lost: number;
   played: number;
   points: number;
-  team: TeamWhereUniqueInput;
+  team?: TeamCreateNestedManyWithoutTablesInput;
   won: number;
 };

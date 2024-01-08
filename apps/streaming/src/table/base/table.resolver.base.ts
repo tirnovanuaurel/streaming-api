@@ -26,8 +26,9 @@ import { TableFindUniqueArgs } from "./TableFindUniqueArgs";
 import { CreateTableArgs } from "./CreateTableArgs";
 import { UpdateTableArgs } from "./UpdateTableArgs";
 import { DeleteTableArgs } from "./DeleteTableArgs";
-import { Competition } from "../../competition/base/Competition";
+import { TeamFindManyArgs } from "../../team/base/TeamFindManyArgs";
 import { Team } from "../../team/base/Team";
+import { Competition } from "../../competition/base/Competition";
 import { TableService } from "../table.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Table)
@@ -98,10 +99,6 @@ export class TableResolverBase {
               connect: args.data.competition,
             }
           : undefined,
-
-        team: {
-          connect: args.data.team,
-        },
       },
     });
   }
@@ -127,10 +124,6 @@ export class TableResolverBase {
                 connect: args.data.competition,
               }
             : undefined,
-
-          team: {
-            connect: args.data.team,
-          },
         },
       });
     } catch (error) {
@@ -165,6 +158,26 @@ export class TableResolverBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [Team], { name: "team" })
+  @nestAccessControl.UseRoles({
+    resource: "Team",
+    action: "read",
+    possession: "any",
+  })
+  async findTeam(
+    @graphql.Parent() parent: Table,
+    @graphql.Args() args: TeamFindManyArgs
+  ): Promise<Team[]> {
+    const results = await this.service.findTeam(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => Competition, {
     nullable: true,
     name: "competition",
@@ -178,25 +191,6 @@ export class TableResolverBase {
     @graphql.Parent() parent: Table
   ): Promise<Competition | null> {
     const result = await this.service.getCompetition(parent.id);
-
-    if (!result) {
-      return null;
-    }
-    return result;
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => Team, {
-    nullable: true,
-    name: "team",
-  })
-  @nestAccessControl.UseRoles({
-    resource: "Team",
-    action: "read",
-    possession: "any",
-  })
-  async getTeam(@graphql.Parent() parent: Table): Promise<Team | null> {
-    const result = await this.service.getTeam(parent.id);
 
     if (!result) {
       return null;

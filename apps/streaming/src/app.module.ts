@@ -3,7 +3,7 @@ import { CompetitionModule } from "./competition/competition.module";
 import { TeamModule } from "./team/team.module";
 import { LiveModule } from "./live/live.module";
 import { TableModule } from "./table/table.module";
-import { SettingModule } from "./setting/setting.module";
+import { AppSettingModule } from "./appSetting/appSetting.module";
 import { ChannelNewModule } from "./channelNew/channelNew.module";
 import { UserModule } from "./user/user.module";
 import { HealthModule } from "./health/health.module";
@@ -27,7 +27,7 @@ import { AuthModule } from "./auth/auth.module";
     TeamModule,
     LiveModule,
     TableModule,
-    SettingModule,
+    AppSettingModule,
     ChannelNewModule,
     UserModule,
     HealthModule,

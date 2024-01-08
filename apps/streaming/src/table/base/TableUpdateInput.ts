@@ -14,7 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { CompetitionWhereUniqueInput } from "../../competition/base/CompetitionWhereUniqueInput";
 import { ValidateNested, IsOptional, IsInt } from "class-validator";
 import { Type } from "class-transformer";
-import { TeamWhereUniqueInput } from "../../team/base/TeamWhereUniqueInput";
+import { TeamUpdateManyWithoutTablesInput } from "./TeamUpdateManyWithoutTablesInput";
 
 @InputType()
 class TableUpdateInput {
@@ -109,15 +109,15 @@ class TableUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: () => TeamWhereUniqueInput,
+    type: () => TeamUpdateManyWithoutTablesInput,
   })
   @ValidateNested()
-  @Type(() => TeamWhereUniqueInput)
+  @Type(() => TeamUpdateManyWithoutTablesInput)
   @IsOptional()
-  @Field(() => TeamWhereUniqueInput, {
+  @Field(() => TeamUpdateManyWithoutTablesInput, {
     nullable: true,
   })
-  team?: TeamWhereUniqueInput;
+  team?: TeamUpdateManyWithoutTablesInput;
 
   @ApiProperty({
     required: false,

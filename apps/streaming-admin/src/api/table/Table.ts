@@ -12,7 +12,7 @@ export type Table = {
   lost: number;
   played: number;
   points: number;
-  team?: Team;
+  team?: Array<Team>;
   updatedAt: Date;
   won: number;
 };

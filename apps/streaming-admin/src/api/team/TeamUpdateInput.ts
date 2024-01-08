@@ -1,7 +1,7 @@
-import { TableUpdateManyWithoutTeamsInput } from "./TableUpdateManyWithoutTeamsInput";
+import { TableWhereUniqueInput } from "../table/TableWhereUniqueInput";
 
 export type TeamUpdateInput = {
   logo?: string;
   name?: string;
-  tables?: TableUpdateManyWithoutTeamsInput;
+  tables?: TableWhereUniqueInput | null;
 };

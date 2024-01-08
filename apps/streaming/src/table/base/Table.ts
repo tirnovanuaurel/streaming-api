@@ -107,11 +107,12 @@ class Table {
 
   @ApiProperty({
     required: true,
-    type: () => Team,
+    type: () => [Team],
   })
   @ValidateNested()
   @Type(() => Team)
-  team?: Team;
+  @IsOptional()
+  team?: Array<Team>;
 
   @ApiProperty({
     required: true,

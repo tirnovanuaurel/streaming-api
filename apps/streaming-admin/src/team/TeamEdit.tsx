@@ -1,14 +1,12 @@
 import * as React from "react";
-
 import {
   Edit,
   SimpleForm,
   EditProps,
   TextInput,
-  ReferenceArrayInput,
-  SelectArrayInput,
+  ReferenceInput,
+  SelectInput,
 } from "react-admin";
-
 import { TableTitle } from "../table/TableTitle";
 
 export const TeamEdit = (props: EditProps): React.ReactElement => {
@@ -17,14 +15,9 @@ export const TeamEdit = (props: EditProps): React.ReactElement => {
       <SimpleForm>
         <TextInput label="logo" source="logo" />
         <TextInput label="name" source="name" />
-        <ReferenceArrayInput
-          source="tables"
-          reference="Table"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
-        >
-          <SelectArrayInput optionText={TableTitle} />
-        </ReferenceArrayInput>
+        <ReferenceInput source="tables.id" reference="Table" label="tables">
+          <SelectInput optionText={TableTitle} />
+        </ReferenceInput>
       </SimpleForm>
     </Edit>
   );
