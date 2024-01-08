@@ -52,14 +52,11 @@ export class TeamServiceBase {
     return this.prisma.team.delete(args);
   }
 
-  async findTables(
-    parentId: string,
-    args: Prisma.TableFindManyArgs
-  ): Promise<Table[]> {
+  async getTables(parentId: string): Promise<Table | null> {
     return this.prisma.team
-      .findUniqueOrThrow({
+      .findUnique({
         where: { id: parentId },
       })
-      .tables(args);
+      .tables();
   }
 }

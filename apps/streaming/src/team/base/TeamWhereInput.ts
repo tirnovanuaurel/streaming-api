@@ -14,7 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
-import { TableListRelationFilter } from "../../table/base/TableListRelationFilter";
+import { TableWhereUniqueInput } from "../../table/base/TableWhereUniqueInput";
 
 @InputType()
 class TeamWhereInput {
@@ -53,15 +53,15 @@ class TeamWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => TableListRelationFilter,
+    type: () => TableWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => TableListRelationFilter)
+  @Type(() => TableWhereUniqueInput)
   @IsOptional()
-  @Field(() => TableListRelationFilter, {
+  @Field(() => TableWhereUniqueInput, {
     nullable: true,
   })
-  tables?: TableListRelationFilter;
+  tables?: TableWhereUniqueInput;
 }
 
 export { TeamWhereInput as TeamWhereInput };

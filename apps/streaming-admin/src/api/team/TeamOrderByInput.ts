@@ -5,5 +5,6 @@ export type TeamOrderByInput = {
   id?: SortOrder;
   logo?: SortOrder;
   name?: SortOrder;
+  tablesId?: SortOrder;
   updatedAt?: SortOrder;
 };

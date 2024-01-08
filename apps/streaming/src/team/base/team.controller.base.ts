@@ -26,9 +26,6 @@ import { Team } from "./Team";
 import { TeamFindManyArgs } from "./TeamFindManyArgs";
 import { TeamWhereUniqueInput } from "./TeamWhereUniqueInput";
 import { TeamUpdateInput } from "./TeamUpdateInput";
-import { TableFindManyArgs } from "../../table/base/TableFindManyArgs";
-import { Table } from "../../table/base/Table";
-import { TableWhereUniqueInput } from "../../table/base/TableWhereUniqueInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -50,12 +47,27 @@ export class TeamControllerBase {
   })
   async createTeam(@common.Body() data: TeamCreateInput): Promise<Team> {
     return await this.service.createTeam({
-      data: data,
+      data: {
+        ...data,
+
+        tables: data.tables
+          ? {
+              connect: data.tables,
+            }
+          : undefined,
+      },
       select: {
         createdAt: true,
         id: true,
         logo: true,
         name: true,
+
+        tables: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
       },
     });
@@ -82,6 +94,13 @@ export class TeamControllerBase {
         id: true,
         logo: true,
         name: true,
+
+        tables: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
       },
     });
@@ -109,6 +128,13 @@ export class TeamControllerBase {
         id: true,
         logo: true,
         name: true,
+
+        tables: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
       },
     });
@@ -139,12 +165,27 @@ export class TeamControllerBase {
     try {
       return await this.service.updateTeam({
         where: params,
-        data: data,
+        data: {
+          ...data,
+
+          tables: data.tables
+            ? {
+                connect: data.tables,
+              }
+            : undefined,
+        },
         select: {
           createdAt: true,
           id: true,
           logo: true,
           name: true,
+
+          tables: {
+            select: {
+              id: true,
+            },
+          },
+
           updatedAt: true,
         },
       });
@@ -180,6 +221,13 @@ export class TeamControllerBase {
           id: true,
           logo: true,
           name: true,
+
+          tables: {
+            select: {
+              id: true,
+            },
+          },
+
           updatedAt: true,
         },
       });
@@ -191,121 +239,5 @@ export class TeamControllerBase {
       }
       throw error;
     }
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @common.Get("/:id/tables")
-  @ApiNestedQuery(TableFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Table",
-    action: "read",
-    possession: "any",
-  })
-  async findTables(
-    @common.Req() request: Request,
-    @common.Param() params: TeamWhereUniqueInput
-  ): Promise<Table[]> {
-    const query = plainToClass(TableFindManyArgs, request.query);
-    const results = await this.service.findTables(params.id, {
-      ...query,
-      select: {
-        competition: {
-          select: {
-            id: true,
-          },
-        },
-
-        createdAt: true,
-        drawn: true,
-        goalsConceded: true,
-        goalsDifference: true,
-        goalsScored: true,
-        id: true,
-        lost: true,
-        played: true,
-        points: true,
-
-        team: {
-          select: {
-            id: true,
-          },
-        },
-
-        updatedAt: true,
-        won: true,
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results;
-  }
-
-  @common.Post("/:id/tables")
-  @nestAccessControl.UseRoles({
-    resource: "Team",
-    action: "update",
-    possession: "any",
-  })
-  async connectTables(
-    @common.Param() params: TeamWhereUniqueInput,
-    @common.Body() body: TableWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      tables: {
-        connect: body,
-      },
-    };
-    await this.service.updateTeam({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Patch("/:id/tables")
-  @nestAccessControl.UseRoles({
-    resource: "Team",
-    action: "update",
-    possession: "any",
-  })
-  async updateTables(
-    @common.Param() params: TeamWhereUniqueInput,
-    @common.Body() body: TableWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      tables: {
-        set: body,
-      },
-    };
-    await this.service.updateTeam({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Delete("/:id/tables")
-  @nestAccessControl.UseRoles({
-    resource: "Team",
-    action: "update",
-    possession: "any",
-  })
-  async disconnectTables(
-    @common.Param() params: TeamWhereUniqueInput,
-    @common.Body() body: TableWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      tables: {
-        disconnect: body,
-      },
-    };
-    await this.service.updateTeam({
-      where: params,
-      data,
-      select: { id: true },
-    });
   }
 }

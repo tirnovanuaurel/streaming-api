@@ -1,6 +1,6 @@
-import { TableCreateNestedManyWithoutCompetitionsInput } from "./TableCreateNestedManyWithoutCompetitionsInput";
+import { TableWhereUniqueInput } from "../table/TableWhereUniqueInput";
 
 export type CompetitionCreateInput = {
   name: string;
-  tables?: TableCreateNestedManyWithoutCompetitionsInput;
+  tables?: TableWhereUniqueInput | null;
 };

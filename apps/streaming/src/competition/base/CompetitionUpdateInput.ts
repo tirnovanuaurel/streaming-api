@@ -12,7 +12,7 @@ https://docs.amplication.com/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsOptional, ValidateNested } from "class-validator";
-import { TableUpdateManyWithoutCompetitionsInput } from "./TableUpdateManyWithoutCompetitionsInput";
+import { TableWhereUniqueInput } from "../../table/base/TableWhereUniqueInput";
 import { Type } from "class-transformer";
 
 @InputType()
@@ -30,15 +30,15 @@ class CompetitionUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: () => TableUpdateManyWithoutCompetitionsInput,
+    type: () => TableWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => TableUpdateManyWithoutCompetitionsInput)
+  @Type(() => TableWhereUniqueInput)
   @IsOptional()
-  @Field(() => TableUpdateManyWithoutCompetitionsInput, {
+  @Field(() => TableWhereUniqueInput, {
     nullable: true,
   })
-  tables?: TableUpdateManyWithoutCompetitionsInput;
+  tables?: TableWhereUniqueInput | null;
 }
 
 export { CompetitionUpdateInput as CompetitionUpdateInput };

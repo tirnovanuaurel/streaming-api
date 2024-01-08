@@ -11,7 +11,6 @@ export type TableOrderByInput = {
   lost?: SortOrder;
   played?: SortOrder;
   points?: SortOrder;
-  teamId?: SortOrder;
   updatedAt?: SortOrder;
   won?: SortOrder;
 };

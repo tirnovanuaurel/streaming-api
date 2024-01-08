@@ -52,14 +52,11 @@ export class CompetitionServiceBase {
     return this.prisma.competition.delete(args);
   }
 
-  async findTables(
-    parentId: string,
-    args: Prisma.TableFindManyArgs
-  ): Promise<Table[]> {
+  async getTables(parentId: string): Promise<Table | null> {
     return this.prisma.competition
-      .findUniqueOrThrow({
+      .findUnique({
         where: { id: parentId },
       })
-      .tables(args);
+      .tables();
   }
 }

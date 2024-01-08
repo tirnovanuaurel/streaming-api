@@ -11,7 +11,7 @@ model Competition {
   createdAt DateTime @default(now())
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String   @unique
-  tables    Table[]
+  tables    Table?
   updatedAt DateTime @updatedAt
 }
 
@@ -20,7 +20,8 @@ model Team {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   logo      String
   name      String   @unique
-  tables    Table[]
+  tables    Table?   @relation(fields: [tablesId], references: [id])
+  tablesId  String?  @db.ObjectId
   updatedAt DateTime @updatedAt
 }
 
@@ -40,7 +41,7 @@ model Live {
 
 model Table {
   competition     Competition? @relation(fields: [competitionId], references: [id])
-  competitionId   String?      @db.ObjectId
+  competitionId   String?      @unique @db.ObjectId
   createdAt       DateTime     @default(now())
   drawn           Int          @default(0)
   goalsConceded   Int          @default(0)
@@ -50,13 +51,12 @@ model Table {
   lost            Int          @default(0)
   played          Int          @default(0)
   points          Int          @default(0)
-  team            Team         @relation(fields: [teamId], references: [id])
-  teamId          String       @db.ObjectId
+  team            Team[]
   updatedAt       DateTime     @updatedAt
   won             Int          @default(0)
 }
 
-model Setting {
+model AppSetting {
   channelLogo String?
   channelName String
   createdAt   DateTime @default(now())

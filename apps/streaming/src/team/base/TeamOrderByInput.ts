@@ -72,6 +72,17 @@ class TeamOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
+  tablesId?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @IsOptional()
+  @IsEnum(SortOrder)
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
   updatedAt?: SortOrder;
 }
 

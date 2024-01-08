@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import {
   Show,
   SimpleShowLayout,
@@ -6,9 +7,12 @@ import {
   ReferenceField,
   TextField,
   DateField,
+  ReferenceManyField,
+  Datagrid,
 } from "react-admin";
+
+import { TABLE_TITLE_FIELD } from "./TableTitle";
 import { COMPETITION_TITLE_FIELD } from "../competition/CompetitionTitle";
-import { TEAM_TITLE_FIELD } from "../team/TeamTitle";
 
 export const TableShow = (props: ShowProps): React.ReactElement => {
   return (
@@ -30,11 +34,20 @@ export const TableShow = (props: ShowProps): React.ReactElement => {
         <TextField label="lost" source="lost" />
         <TextField label="played" source="played" />
         <TextField label="points" source="points" />
-        <ReferenceField label="team" source="team.id" reference="Team">
-          <TextField source={TEAM_TITLE_FIELD} />
-        </ReferenceField>
         <DateField source="updatedAt" label="Updated At" />
         <TextField label="won" source="won" />
+        <ReferenceManyField reference="Team" target="tablesId" label="teams">
+          <Datagrid rowClick="show">
+            <DateField source="createdAt" label="Created At" />
+            <TextField label="ID" source="id" />
+            <TextField label="logo" source="logo" />
+            <TextField label="name" source="name" />
+            <ReferenceField label="tables" source="table.id" reference="Table">
+              <TextField source={TABLE_TITLE_FIELD} />
+            </ReferenceField>
+            <DateField source="updatedAt" label="Updated At" />
+          </Datagrid>
+        </ReferenceManyField>
       </SimpleShowLayout>
     </Show>
   );

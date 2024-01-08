@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import {
   Edit,
   SimpleForm,
@@ -6,7 +7,10 @@ import {
   ReferenceInput,
   SelectInput,
   NumberInput,
+  ReferenceArrayInput,
+  SelectArrayInput,
 } from "react-admin";
+
 import { CompetitionTitle } from "../competition/CompetitionTitle";
 import { TeamTitle } from "../team/TeamTitle";
 
@@ -32,9 +36,14 @@ export const TableEdit = (props: EditProps): React.ReactElement => {
         <NumberInput step={1} label="lost" source="lost" />
         <NumberInput step={1} label="played" source="played" />
         <NumberInput step={1} label="points" source="points" />
-        <ReferenceInput source="team.id" reference="Team" label="team">
-          <SelectInput optionText={TeamTitle} />
-        </ReferenceInput>
+        <ReferenceArrayInput
+          source="team"
+          reference="Team"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={TeamTitle} />
+        </ReferenceArrayInput>
         <NumberInput step={1} label="won" source="won" />
       </SimpleForm>
     </Edit>

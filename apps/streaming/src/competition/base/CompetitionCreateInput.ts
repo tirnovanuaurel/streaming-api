@@ -12,7 +12,7 @@ https://docs.amplication.com/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString, ValidateNested, IsOptional } from "class-validator";
-import { TableCreateNestedManyWithoutCompetitionsInput } from "./TableCreateNestedManyWithoutCompetitionsInput";
+import { TableWhereUniqueInput } from "../../table/base/TableWhereUniqueInput";
 import { Type } from "class-transformer";
 
 @InputType()
@@ -27,15 +27,15 @@ class CompetitionCreateInput {
 
   @ApiProperty({
     required: false,
-    type: () => TableCreateNestedManyWithoutCompetitionsInput,
+    type: () => TableWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => TableCreateNestedManyWithoutCompetitionsInput)
+  @Type(() => TableWhereUniqueInput)
   @IsOptional()
-  @Field(() => TableCreateNestedManyWithoutCompetitionsInput, {
+  @Field(() => TableWhereUniqueInput, {
     nullable: true,
   })
-  tables?: TableCreateNestedManyWithoutCompetitionsInput;
+  tables?: TableWhereUniqueInput | null;
 }
 
 export { CompetitionCreateInput as CompetitionCreateInput };

@@ -1,6 +1,6 @@
-import { TableUpdateManyWithoutCompetitionsInput } from "./TableUpdateManyWithoutCompetitionsInput";
+import { TableWhereUniqueInput } from "../table/TableWhereUniqueInput";
 
 export type CompetitionUpdateInput = {
   name?: string;
-  tables?: TableUpdateManyWithoutCompetitionsInput;
+  tables?: TableWhereUniqueInput | null;
 };

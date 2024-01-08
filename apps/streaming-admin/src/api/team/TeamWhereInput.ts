@@ -1,9 +1,9 @@
 import { StringFilter } from "../../util/StringFilter";
-import { TableListRelationFilter } from "../table/TableListRelationFilter";
+import { TableWhereUniqueInput } from "../table/TableWhereUniqueInput";
 
 export type TeamWhereInput = {
   id?: StringFilter;
   logo?: StringFilter;
   name?: StringFilter;
-  tables?: TableListRelationFilter;
+  tables?: TableWhereUniqueInput;
 };

@@ -5,6 +5,6 @@ export type Team = {
   id: string;
   logo: string;
   name: string;
-  tables?: Array<Table>;
+  tables?: Table | null;
   updatedAt: Date;
 };

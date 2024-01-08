@@ -26,7 +26,6 @@ import { CompetitionFindUniqueArgs } from "./CompetitionFindUniqueArgs";
 import { CreateCompetitionArgs } from "./CreateCompetitionArgs";
 import { UpdateCompetitionArgs } from "./UpdateCompetitionArgs";
 import { DeleteCompetitionArgs } from "./DeleteCompetitionArgs";
-import { TableFindManyArgs } from "../../table/base/TableFindManyArgs";
 import { Table } from "../../table/base/Table";
 import { CompetitionService } from "../competition.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
@@ -94,7 +93,15 @@ export class CompetitionResolverBase {
   ): Promise<Competition> {
     return await this.service.createCompetition({
       ...args,
-      data: args.data,
+      data: {
+        ...args.data,
+
+        tables: args.data.tables
+          ? {
+              connect: args.data.tables,
+            }
+          : undefined,
+      },
     });
   }
 
@@ -111,7 +118,15 @@ export class CompetitionResolverBase {
     try {
       return await this.service.updateCompetition({
         ...args,
-        data: args.data,
+        data: {
+          ...args.data,
+
+          tables: args.data.tables
+            ? {
+                connect: args.data.tables,
+              }
+            : undefined,
+        },
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -145,22 +160,23 @@ export class CompetitionResolverBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => [Table], { name: "tables" })
+  @graphql.ResolveField(() => Table, {
+    nullable: true,
+    name: "tables",
+  })
   @nestAccessControl.UseRoles({
     resource: "Table",
     action: "read",
     possession: "any",
   })
-  async findTables(
-    @graphql.Parent() parent: Competition,
-    @graphql.Args() args: TableFindManyArgs
-  ): Promise<Table[]> {
-    const results = await this.service.findTables(parent.id, args);
+  async getTables(
+    @graphql.Parent() parent: Competition
+  ): Promise<Table | null> {
+    const result = await this.service.getTables(parent.id);
 
-    if (!results) {
-      return [];
+    if (!result) {
+      return null;
     }
-
-    return results;
+    return result;
   }
 }

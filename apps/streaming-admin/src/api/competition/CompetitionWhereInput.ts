@@ -1,8 +1,8 @@
 import { StringFilter } from "../../util/StringFilter";
-import { TableListRelationFilter } from "../table/TableListRelationFilter";
+import { TableWhereUniqueInput } from "../table/TableWhereUniqueInput";
 
 export type CompetitionWhereInput = {
   id?: StringFilter;
   name?: StringFilter;
-  tables?: TableListRelationFilter;
+  tables?: TableWhereUniqueInput;
 };

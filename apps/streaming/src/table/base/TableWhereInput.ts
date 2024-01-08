@@ -16,7 +16,7 @@ import { ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
 import { IntFilter } from "../../util/IntFilter";
 import { StringFilter } from "../../util/StringFilter";
-import { TeamWhereUniqueInput } from "../../team/base/TeamWhereUniqueInput";
+import { TeamListRelationFilter } from "../../team/base/TeamListRelationFilter";
 
 @InputType()
 class TableWhereInput {
@@ -122,15 +122,15 @@ class TableWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => TeamWhereUniqueInput,
+    type: () => TeamListRelationFilter,
   })
   @ValidateNested()
-  @Type(() => TeamWhereUniqueInput)
+  @Type(() => TeamListRelationFilter)
   @IsOptional()
-  @Field(() => TeamWhereUniqueInput, {
+  @Field(() => TeamListRelationFilter, {
     nullable: true,
   })
-  team?: TeamWhereUniqueInput;
+  team?: TeamListRelationFilter;
 
   @ApiProperty({
     required: false,

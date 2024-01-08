@@ -9,7 +9,6 @@ import {
 } from "react-admin";
 import Pagination from "../Components/Pagination";
 import { COMPETITION_TITLE_FIELD } from "../competition/CompetitionTitle";
-import { TEAM_TITLE_FIELD } from "../team/TeamTitle";
 
 export const TableList = (props: ListProps): React.ReactElement => {
   return (
@@ -37,9 +36,6 @@ export const TableList = (props: ListProps): React.ReactElement => {
         <TextField label="lost" source="lost" />
         <TextField label="played" source="played" />
         <TextField label="points" source="points" />
-        <ReferenceField label="team" source="team.id" reference="Team">
-          <TextField source={TEAM_TITLE_FIELD} />
-        </ReferenceField>
         <DateField source="updatedAt" label="Updated At" />
         <TextField label="won" source="won" />
       </Datagrid>
