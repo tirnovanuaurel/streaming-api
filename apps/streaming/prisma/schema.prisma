@@ -25,10 +25,12 @@ model Team {
 }
 
 model Live {
+  awayGoals     Json?
   awayScore     Int      @default(0)
   awayTeam      String
   awayTeamBadge String?
   createdAt     DateTime @default(now())
+  homeGoals     Json?
   homeScore     Int      @default(0)
   homeTeam      String
   homeTeamBadge String?

@@ -28,6 +28,17 @@ class LiveOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
+  awayGoals?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @IsOptional()
+  @IsEnum(SortOrder)
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
   awayScore?: SortOrder;
 
   @ApiProperty({
@@ -62,6 +73,17 @@ class LiveOrderByInput {
     nullable: true,
   })
   createdAt?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @IsOptional()
+  @IsEnum(SortOrder)
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
+  homeGoals?: SortOrder;
 
   @ApiProperty({
     required: false,

@@ -31,10 +31,12 @@ export class LiveControllerBase {
     return await this.service.createLive({
       data: data,
       select: {
+        awayGoals: true,
         awayScore: true,
         awayTeam: true,
         awayTeamBadge: true,
         createdAt: true,
+        homeGoals: true,
         homeScore: true,
         homeTeam: true,
         homeTeamBadge: true,
@@ -52,10 +54,12 @@ export class LiveControllerBase {
     return this.service.lives({
       ...args,
       select: {
+        awayGoals: true,
         awayScore: true,
         awayTeam: true,
         awayTeamBadge: true,
         createdAt: true,
+        homeGoals: true,
         homeScore: true,
         homeTeam: true,
         homeTeamBadge: true,
@@ -74,10 +78,12 @@ export class LiveControllerBase {
     const result = await this.service.live({
       where: params,
       select: {
+        awayGoals: true,
         awayScore: true,
         awayTeam: true,
         awayTeamBadge: true,
         createdAt: true,
+        homeGoals: true,
         homeScore: true,
         homeTeam: true,
         homeTeamBadge: true,
@@ -105,10 +111,12 @@ export class LiveControllerBase {
         where: params,
         data: data,
         select: {
+          awayGoals: true,
           awayScore: true,
           awayTeam: true,
           awayTeamBadge: true,
           createdAt: true,
+          homeGoals: true,
           homeScore: true,
           homeTeam: true,
           homeTeamBadge: true,
@@ -136,10 +144,12 @@ export class LiveControllerBase {
       return await this.service.deleteLive({
         where: params,
         select: {
+          awayGoals: true,
           awayScore: true,
           awayTeam: true,
           awayTeamBadge: true,
           createdAt: true,
+          homeGoals: true,
           homeScore: true,
           homeTeam: true,
           homeTeamBadge: true,
