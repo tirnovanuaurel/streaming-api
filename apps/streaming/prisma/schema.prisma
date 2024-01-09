@@ -7,22 +7,21 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Competition {
-  createdAt DateTime @default(now())
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String   @unique
-  tables    Table?
-  updatedAt DateTime @updatedAt
-}
-
 model Team {
-  createdAt DateTime @default(now())
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  logo      String
-  name      String   @unique
-  tables    Table?   @relation(fields: [tablesId], references: [id])
-  tablesId  String?  @db.ObjectId
-  updatedAt DateTime @updatedAt
+  competition     EnumTeamCompetition?
+  createdAt       DateTime             @default(now())
+  drawn           Int?
+  goalsConceded   Int?
+  goalsDifference Int?
+  goalsScored     Int?
+  id              String               @id @default(auto()) @map("_id") @db.ObjectId
+  logo            String
+  lost            Int?
+  name            String               @unique
+  played          Int?
+  points          Int?
+  updatedAt       DateTime             @updatedAt
+  won             Int?
 }
 
 model Live {
@@ -37,34 +36,6 @@ model Live {
   homeTeamBadge String?
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   updatedAt     DateTime @updatedAt
-}
-
-model Table {
-  competition     Competition? @relation(fields: [competitionId], references: [id])
-  competitionId   String?      @unique @db.ObjectId
-  createdAt       DateTime     @default(now())
-  drawn           Int          @default(0)
-  goalsConceded   Int          @default(0)
-  goalsDifference Int          @default(0)
-  goalsScored     Int          @default(0)
-  id              String       @id @default(auto()) @map("_id") @db.ObjectId
-  lost            Int          @default(0)
-  played          Int          @default(0)
-  points          Int          @default(0)
-  team            Team[]
-  updatedAt       DateTime     @updatedAt
-  won             Int          @default(0)
-}
-
-model AppSetting {
-  channelLogo String?
-  channelName String
-  createdAt   DateTime @default(now())
-  facebook    String?
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  instagram   String?
-  twiiter     String?
-  updatedAt   DateTime @updatedAt
 }
 
 model ChannelNew {
@@ -84,4 +55,14 @@ model User {
   roles     Json
   updatedAt DateTime @updatedAt
   username  String   @unique
+}
+
+enum EnumTeamCompetition {
+  PremierLeague
+  LaLiga
+  SerieA
+  Ligue_1
+  Bundesliga
+  Championship
+  SaudiProLeague
 }

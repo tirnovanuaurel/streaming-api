@@ -5,10 +5,6 @@ import { theme } from "./theme/theme";
 import Login from "./Login";
 import "./App.scss";
 import Dashboard from "./pages/Dashboard";
-import { CompetitionList } from "./competition/CompetitionList";
-import { CompetitionCreate } from "./competition/CompetitionCreate";
-import { CompetitionEdit } from "./competition/CompetitionEdit";
-import { CompetitionShow } from "./competition/CompetitionShow";
 import { TeamList } from "./team/TeamList";
 import { TeamCreate } from "./team/TeamCreate";
 import { TeamEdit } from "./team/TeamEdit";
@@ -17,14 +13,6 @@ import { LiveList } from "./live/LiveList";
 import { LiveCreate } from "./live/LiveCreate";
 import { LiveEdit } from "./live/LiveEdit";
 import { LiveShow } from "./live/LiveShow";
-import { TableList } from "./table/TableList";
-import { TableCreate } from "./table/TableCreate";
-import { TableEdit } from "./table/TableEdit";
-import { TableShow } from "./table/TableShow";
-import { AppSettingList } from "./appSetting/AppSettingList";
-import { AppSettingCreate } from "./appSetting/AppSettingCreate";
-import { AppSettingEdit } from "./appSetting/AppSettingEdit";
-import { AppSettingShow } from "./appSetting/AppSettingShow";
 import { ChannelNewList } from "./channelNew/ChannelNewList";
 import { ChannelNewCreate } from "./channelNew/ChannelNewCreate";
 import { ChannelNewEdit } from "./channelNew/ChannelNewEdit";
@@ -60,13 +48,6 @@ const App = (): React.ReactElement => {
         loginPage={Login}
       >
         <Resource
-          name="Competition"
-          list={CompetitionList}
-          edit={CompetitionEdit}
-          create={CompetitionCreate}
-          show={CompetitionShow}
-        />
-        <Resource
           name="Team"
           list={TeamList}
           edit={TeamEdit}
@@ -79,20 +60,6 @@ const App = (): React.ReactElement => {
           edit={LiveEdit}
           create={LiveCreate}
           show={LiveShow}
-        />
-        <Resource
-          name="Table"
-          list={TableList}
-          edit={TableEdit}
-          create={TableCreate}
-          show={TableShow}
-        />
-        <Resource
-          name="AppSetting"
-          list={AppSettingList}
-          edit={AppSettingEdit}
-          create={AppSettingCreate}
-          show={AppSettingShow}
         />
         <Resource
           name="ChannelNew"

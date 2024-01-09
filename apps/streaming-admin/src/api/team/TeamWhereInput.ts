@@ -1,9 +1,14 @@
 import { StringFilter } from "../../util/StringFilter";
-import { TableWhereUniqueInput } from "../table/TableWhereUniqueInput";
 
 export type TeamWhereInput = {
+  competition?:
+    | "PremierLeague"
+    | "LaLiga"
+    | "SerieA"
+    | "Ligue_1"
+    | "Bundesliga"
+    | "Championship"
+    | "SaudiProLeague";
   id?: StringFilter;
-  logo?: StringFilter;
   name?: StringFilter;
-  tables?: TableWhereUniqueInput;
 };

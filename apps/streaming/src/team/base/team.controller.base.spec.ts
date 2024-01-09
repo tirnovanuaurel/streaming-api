@@ -19,33 +19,65 @@ const nonExistingId = "nonExistingId";
 const existingId = "existingId";
 const CREATE_INPUT = {
   createdAt: new Date(),
+  drawn: 42,
+  goalsConceded: 42,
+  goalsDifference: 42,
+  goalsScored: 42,
   id: "exampleId",
   logo: "exampleLogo",
+  lost: 42,
   name: "exampleName",
+  played: 42,
+  points: 42,
   updatedAt: new Date(),
+  won: 42,
 };
 const CREATE_RESULT = {
   createdAt: new Date(),
+  drawn: 42,
+  goalsConceded: 42,
+  goalsDifference: 42,
+  goalsScored: 42,
   id: "exampleId",
   logo: "exampleLogo",
+  lost: 42,
   name: "exampleName",
+  played: 42,
+  points: 42,
   updatedAt: new Date(),
+  won: 42,
 };
 const FIND_MANY_RESULT = [
   {
     createdAt: new Date(),
+    drawn: 42,
+    goalsConceded: 42,
+    goalsDifference: 42,
+    goalsScored: 42,
     id: "exampleId",
     logo: "exampleLogo",
+    lost: 42,
     name: "exampleName",
+    played: 42,
+    points: 42,
     updatedAt: new Date(),
+    won: 42,
   },
 ];
 const FIND_ONE_RESULT = {
   createdAt: new Date(),
+  drawn: 42,
+  goalsConceded: 42,
+  goalsDifference: 42,
+  goalsScored: 42,
   id: "exampleId",
   logo: "exampleLogo",
+  lost: 42,
   name: "exampleName",
+  played: 42,
+  points: 42,
   updatedAt: new Date(),
+  won: 42,
 };
 
 const service = {

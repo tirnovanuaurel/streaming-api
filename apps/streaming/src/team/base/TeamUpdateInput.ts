@@ -11,12 +11,74 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, ValidateNested } from "class-validator";
-import { TableWhereUniqueInput } from "../../table/base/TableWhereUniqueInput";
-import { Type } from "class-transformer";
+import { EnumTeamCompetition } from "./EnumTeamCompetition";
+import { IsEnum, IsOptional, IsInt, IsString } from "class-validator";
 
 @InputType()
 class TeamUpdateInput {
+  @ApiProperty({
+    required: false,
+    enum: EnumTeamCompetition,
+  })
+  @IsEnum(EnumTeamCompetition)
+  @IsOptional()
+  @Field(() => EnumTeamCompetition, {
+    nullable: true,
+  })
+  competition?:
+    | "PremierLeague"
+    | "LaLiga"
+    | "SerieA"
+    | "Ligue_1"
+    | "Bundesliga"
+    | "Championship"
+    | "SaudiProLeague"
+    | null;
+
+  @ApiProperty({
+    required: false,
+    type: Number,
+  })
+  @IsInt()
+  @IsOptional()
+  @Field(() => Number, {
+    nullable: true,
+  })
+  drawn?: number | null;
+
+  @ApiProperty({
+    required: false,
+    type: Number,
+  })
+  @IsInt()
+  @IsOptional()
+  @Field(() => Number, {
+    nullable: true,
+  })
+  goalsConceded?: number | null;
+
+  @ApiProperty({
+    required: false,
+    type: Number,
+  })
+  @IsInt()
+  @IsOptional()
+  @Field(() => Number, {
+    nullable: true,
+  })
+  goalsDifference?: number | null;
+
+  @ApiProperty({
+    required: false,
+    type: Number,
+  })
+  @IsInt()
+  @IsOptional()
+  @Field(() => Number, {
+    nullable: true,
+  })
+  goalsScored?: number | null;
+
   @ApiProperty({
     required: false,
     type: String,
@@ -27,6 +89,17 @@ class TeamUpdateInput {
     nullable: true,
   })
   logo?: string;
+
+  @ApiProperty({
+    required: false,
+    type: Number,
+  })
+  @IsInt()
+  @IsOptional()
+  @Field(() => Number, {
+    nullable: true,
+  })
+  lost?: number | null;
 
   @ApiProperty({
     required: false,
@@ -41,15 +114,36 @@ class TeamUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: () => TableWhereUniqueInput,
+    type: Number,
   })
-  @ValidateNested()
-  @Type(() => TableWhereUniqueInput)
+  @IsInt()
   @IsOptional()
-  @Field(() => TableWhereUniqueInput, {
+  @Field(() => Number, {
     nullable: true,
   })
-  tables?: TableWhereUniqueInput | null;
+  played?: number | null;
+
+  @ApiProperty({
+    required: false,
+    type: Number,
+  })
+  @IsInt()
+  @IsOptional()
+  @Field(() => Number, {
+    nullable: true,
+  })
+  points?: number | null;
+
+  @ApiProperty({
+    required: false,
+    type: Number,
+  })
+  @IsInt()
+  @IsOptional()
+  @Field(() => Number, {
+    nullable: true,
+  })
+  won?: number | null;
 }
 
 export { TeamUpdateInput as TeamUpdateInput };
