@@ -1,9 +1,0 @@
-import { Table } from "../table/Table";
-
-export type Competition = {
-  createdAt: Date;
-  id: string;
-  name: string;
-  tables?: Table | null;
-  updatedAt: Date;
-};

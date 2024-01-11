@@ -9,19 +9,18 @@ https://docs.amplication.com/how-to/custom-code
 
 ------------------------------------------------------------------------------
   */
-import { InputType, Field } from "@nestjs/graphql";
-import { ApiProperty } from "@nestjs/swagger";
-import { IsString } from "class-validator";
+import { registerEnumType } from "@nestjs/graphql";
 
-@InputType()
-class CompetitionWhereUniqueInput {
-  @ApiProperty({
-    required: true,
-    type: String,
-  })
-  @IsString()
-  @Field(() => String)
-  id!: string;
+export enum EnumTeamCompetition {
+  PremierLeague = "PremierLeague",
+  LaLiga = "LaLiga",
+  SerieA = "SerieA",
+  Ligue_1 = "Ligue_1",
+  Bundesliga = "Bundesliga",
+  Championship = "Championship",
+  SaudiProLeague = "SaudiProLeague",
 }
 
-export { CompetitionWhereUniqueInput as CompetitionWhereUniqueInput };
+registerEnumType(EnumTeamCompetition, {
+  name: "EnumTeamCompetition",
+});

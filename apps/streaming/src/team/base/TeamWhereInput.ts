@@ -11,13 +11,31 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
+import { EnumTeamCompetition } from "./EnumTeamCompetition";
+import { IsEnum, IsOptional } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
-import { IsOptional, ValidateNested } from "class-validator";
-import { TableWhereUniqueInput } from "../../table/base/TableWhereUniqueInput";
 
 @InputType()
 class TeamWhereInput {
+  @ApiProperty({
+    required: false,
+    enum: EnumTeamCompetition,
+  })
+  @IsEnum(EnumTeamCompetition)
+  @IsOptional()
+  @Field(() => EnumTeamCompetition, {
+    nullable: true,
+  })
+  competition?:
+    | "PremierLeague"
+    | "LaLiga"
+    | "SerieA"
+    | "Ligue_1"
+    | "Bundesliga"
+    | "Championship"
+    | "SaudiProLeague";
+
   @ApiProperty({
     required: false,
     type: StringFilter,
@@ -38,30 +56,7 @@ class TeamWhereInput {
   @Field(() => StringFilter, {
     nullable: true,
   })
-  logo?: StringFilter;
-
-  @ApiProperty({
-    required: false,
-    type: StringFilter,
-  })
-  @Type(() => StringFilter)
-  @IsOptional()
-  @Field(() => StringFilter, {
-    nullable: true,
-  })
   name?: StringFilter;
-
-  @ApiProperty({
-    required: false,
-    type: () => TableWhereUniqueInput,
-  })
-  @ValidateNested()
-  @Type(() => TableWhereUniqueInput)
-  @IsOptional()
-  @Field(() => TableWhereUniqueInput, {
-    nullable: true,
-  })
-  tables?: TableWhereUniqueInput;
 }
 
 export { TeamWhereInput as TeamWhereInput };

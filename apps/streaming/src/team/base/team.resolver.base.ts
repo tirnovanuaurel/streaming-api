@@ -26,7 +26,6 @@ import { TeamFindUniqueArgs } from "./TeamFindUniqueArgs";
 import { CreateTeamArgs } from "./CreateTeamArgs";
 import { UpdateTeamArgs } from "./UpdateTeamArgs";
 import { DeleteTeamArgs } from "./DeleteTeamArgs";
-import { Table } from "../../table/base/Table";
 import { TeamService } from "../team.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Team)
@@ -87,15 +86,7 @@ export class TeamResolverBase {
   async createTeam(@graphql.Args() args: CreateTeamArgs): Promise<Team> {
     return await this.service.createTeam({
       ...args,
-      data: {
-        ...args.data,
-
-        tables: args.data.tables
-          ? {
-              connect: args.data.tables,
-            }
-          : undefined,
-      },
+      data: args.data,
     });
   }
 
@@ -110,15 +101,7 @@ export class TeamResolverBase {
     try {
       return await this.service.updateTeam({
         ...args,
-        data: {
-          ...args.data,
-
-          tables: args.data.tables
-            ? {
-                connect: args.data.tables,
-              }
-            : undefined,
-        },
+        data: args.data,
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -147,24 +130,5 @@ export class TeamResolverBase {
       }
       throw error;
     }
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => Table, {
-    nullable: true,
-    name: "tables",
-  })
-  @nestAccessControl.UseRoles({
-    resource: "Table",
-    action: "read",
-    possession: "any",
-  })
-  async getTables(@graphql.Parent() parent: Team): Promise<Table | null> {
-    const result = await this.service.getTables(parent.id);
-
-    if (!result) {
-      return null;
-    }
-    return result;
   }
 }

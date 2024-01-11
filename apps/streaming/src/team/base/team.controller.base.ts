@@ -47,28 +47,22 @@ export class TeamControllerBase {
   })
   async createTeam(@common.Body() data: TeamCreateInput): Promise<Team> {
     return await this.service.createTeam({
-      data: {
-        ...data,
-
-        tables: data.tables
-          ? {
-              connect: data.tables,
-            }
-          : undefined,
-      },
+      data: data,
       select: {
+        competition: true,
         createdAt: true,
+        drawn: true,
+        goalsConceded: true,
+        goalsDifference: true,
+        goalsScored: true,
         id: true,
         logo: true,
+        lost: true,
         name: true,
-
-        tables: {
-          select: {
-            id: true,
-          },
-        },
-
+        played: true,
+        points: true,
         updatedAt: true,
+        won: true,
       },
     });
   }
@@ -90,18 +84,20 @@ export class TeamControllerBase {
     return this.service.teams({
       ...args,
       select: {
+        competition: true,
         createdAt: true,
+        drawn: true,
+        goalsConceded: true,
+        goalsDifference: true,
+        goalsScored: true,
         id: true,
         logo: true,
+        lost: true,
         name: true,
-
-        tables: {
-          select: {
-            id: true,
-          },
-        },
-
+        played: true,
+        points: true,
         updatedAt: true,
+        won: true,
       },
     });
   }
@@ -124,18 +120,20 @@ export class TeamControllerBase {
     const result = await this.service.team({
       where: params,
       select: {
+        competition: true,
         createdAt: true,
+        drawn: true,
+        goalsConceded: true,
+        goalsDifference: true,
+        goalsScored: true,
         id: true,
         logo: true,
+        lost: true,
         name: true,
-
-        tables: {
-          select: {
-            id: true,
-          },
-        },
-
+        played: true,
+        points: true,
         updatedAt: true,
+        won: true,
       },
     });
     if (result === null) {
@@ -165,28 +163,22 @@ export class TeamControllerBase {
     try {
       return await this.service.updateTeam({
         where: params,
-        data: {
-          ...data,
-
-          tables: data.tables
-            ? {
-                connect: data.tables,
-              }
-            : undefined,
-        },
+        data: data,
         select: {
+          competition: true,
           createdAt: true,
+          drawn: true,
+          goalsConceded: true,
+          goalsDifference: true,
+          goalsScored: true,
           id: true,
           logo: true,
+          lost: true,
           name: true,
-
-          tables: {
-            select: {
-              id: true,
-            },
-          },
-
+          played: true,
+          points: true,
           updatedAt: true,
+          won: true,
         },
       });
     } catch (error) {
@@ -217,18 +209,20 @@ export class TeamControllerBase {
       return await this.service.deleteTeam({
         where: params,
         select: {
+          competition: true,
           createdAt: true,
+          drawn: true,
+          goalsConceded: true,
+          goalsDifference: true,
+          goalsScored: true,
           id: true,
           logo: true,
+          lost: true,
           name: true,
-
-          tables: {
-            select: {
-              id: true,
-            },
-          },
-
+          played: true,
+          points: true,
           updatedAt: true,
+          won: true,
         },
       });
     } catch (error) {

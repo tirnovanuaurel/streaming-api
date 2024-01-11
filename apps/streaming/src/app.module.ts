@@ -1,9 +1,6 @@
 import { Module } from "@nestjs/common";
-import { CompetitionModule } from "./competition/competition.module";
 import { TeamModule } from "./team/team.module";
 import { LiveModule } from "./live/live.module";
-import { TableModule } from "./table/table.module";
-import { AppSettingModule } from "./appSetting/appSetting.module";
 import { ChannelNewModule } from "./channelNew/channelNew.module";
 import { UserModule } from "./user/user.module";
 import { HealthModule } from "./health/health.module";
@@ -23,11 +20,8 @@ import { AuthModule } from "./auth/auth.module";
   imports: [
     ACLModule,
     AuthModule,
-    CompetitionModule,
     TeamModule,
     LiveModule,
-    TableModule,
-    AppSettingModule,
     ChannelNewModule,
     UserModule,
     HealthModule,
